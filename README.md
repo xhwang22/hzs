@@ -61,6 +61,8 @@ make all
 
 首次克隆后，创建 `.venv` 并安装 `requirements-paper.txt` 中的依赖。本地 Tectonic 二进制不入库；若已将 Tectonic 安装到 PATH，可用 `make TECTONIC=tectonic` 编译。常规编译只需要本仓库，不需要访问 framework 或运行中的实验。GitHub中保留编译PDF、当前图形与冻结数据；虚拟环境、工具二进制、下载缓存和本地旧稿/图形迭代不上传。
 
+Overleaf：同步仓库后，将主文档设为根目录 `main.tex`，编译器选 `XeLaTeX`，TeX Live 选最新可用版本。根目录 `latexmkrc` 为 Overleaf 配置 `vendor/iclr2027/` 的 `.sty` 和 `.bst` 搜索路径；不要把模板示例文件设为主文档。若此前提示 `iclr2027_conference.sty not found`，确认已拉取 `latexmkrc`，再执行 **Recompile from scratch**。图已提供PDF，无需在Overleaf运行Python绘图。
+
 `tools/collect_results.py` 是独立的只读采集入口，不在常规 make 中调用；它拒绝覆盖既有快照。本次用 `tools/update_ace_results.py` 仅刷新 ACE，校验已存 baseline、前四轮 Test、前九轮 dev/训练及协议未变，并原样保留其他两个 study。更新脚本拒绝覆盖已生成的补充快照。以后继续更新应另存新版本并明确轮次截止，再审核协议与选轮规则。
 
 Python 依赖仅安装在本目录 `.venv`；缓存留在本目录。没有安装系统级 LaTeX 或修改源项目配置。当前完整PDF为14页；主图第2页、结果表第6页、四面板主实验图第7页。声明/参考文献从第8页开始。原有附录内容保留，未再添加AppWorld图表；实际布局记录在 `build/document_check.json`。
