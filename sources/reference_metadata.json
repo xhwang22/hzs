@@ -1,0 +1,504 @@
+[
+  {
+    "key": "envharness",
+    "arxiv": "2608.19880",
+    "title": "EnvHarness: Awakening Static Worlds for Agent Learning",
+    "authors": [
+      "Huang, Chengsong",
+      "Wang, Zifeng",
+      "Han, Rujun",
+      "Yan, Jun",
+      "Chen, Yanfei",
+      "CuiZhu, Zoey",
+      "Jiang, Ke",
+      "Xia, Peng",
+      "Yu, Han",
+      "Zhuang, Yufan",
+      "Ming, Yifei",
+      "Pan, Jiaqi",
+      "Mishra, Bhavana Dalvi",
+      "Huang, Jiaxin",
+      "Gokturk, Burak",
+      "Pfister, Tomas",
+      "Lee, Chen-Yu"
+    ],
+    "date": "2026/08/20",
+    "url": "https://arxiv.org/abs/2608.19880",
+    "abstract": [
+      "LLM agents learn by interacting with environments, yet these environments are hand-built and static: blind to an agent's weaknesses, and quickly left behind as it improves. While recent environment generation methods attempt to address this, they require domain-specific pipelines, rely on expensive or unreliable verifiers, and still produce static environments. To alleviate the engineering burden of rebuilding environments from scratch, we propose Environment Harness (EnvHarness), a programmable layer of plug-in components that wraps a static environment to reshape its behavior without modifying the underlying logic. Operating through standard interfaces, EnvHarness applies across diverse domains while ensuring every reshaped environment retains its original verifier. To automate this process, we introduce EnvRigger, which treats the target policy as a black box, observing its execution trajectories to synthesize EnvHarness components targeting diagnosed flaws, and validating them via fresh rollouts. Across five benchmarks in four domains, EnvHarness outperforms both original environments and domain-specific environment generation pipelines, achieving up to a 9.0-point improvement on held-out instances with 9.8% fewer execution steps. Furthermore, EnvHarness provides a superior optimization signal for reinforcement learning, enabling continuous, targeted co-evolution of the policy and its environment."
+    ]
+  },
+  {
+    "key": "spade",
+    "arxiv": "2608.19197",
+    "title": "SPADE: Self-Play in Adaptive Synthetic Executable Environments",
+    "authors": [
+      "Liu, Bo",
+      "Yu, Simon",
+      "Jiang, Yiding",
+      "Qu, Ao",
+      "Zhao, Andrew",
+      "Liu, Zichen",
+      "Kim, Junsu",
+      "Zhou, Zijian",
+      "Kim, Seungone",
+      "Ren, Tongzheng",
+      "Liu, Mickel",
+      "Yu, Hanfei",
+      "Chen, Zhaorun",
+      "Shi, Weiyan",
+      "Liang, Paul Pu",
+      "Zettlemoyer, Luke",
+      "Choi, Yejin",
+      "Jaques, Natasha"
+    ],
+    "date": "2026/08/19",
+    "url": "https://arxiv.org/abs/2608.19197",
+    "abstract": [
+      "Continuous self-improvement requires an ever-expanding pool of self-generated, diverse, adaptive goals. For language agents, existing training environment pools (hand-curated, statically synthesized, or frozen-verifier) keep the goal distribution fixed as the learner scales. We introduce SPADE (Self-Play in Adaptive Synthetic Executable Environments), a self-play RL framework in which a single LLM plays two roles: an Environment Designer that writes complete, long-horizon training environments as executable code with an OpenAI Gym-style reset()/step() interface, and a Reasoning Agent that learns to act in them. Each is a stateful, multi-turn environment (state transitions, reward functions, and verification code), so one interface spans reasoning problems and multi-step agentic tool use. The Reasoning Agent's regret is estimated using the gap between its reward with and without privileged hints; in optimizing this regret signal the Environment Designer learns to target environments at the edge of the agent's capabilities while keeping them feasible. Through extensive experimentation, we find several components critical to success: grounding the Environment Designer on documents sampled from a large pretraining corpus, and giving it an accumulated environment memory. Scaling to 30B-parameter models, SPADE improves over the strongest fixed-environment baseline by +5.3 on average across eight held-out math, science, code, and reasoning benchmarks, and lifts the tool-use setting by +5.7 on BFCL-v4 multi-turn and +13.9 on ACEBench-Agent; on the games setting, the margin over the strongest baseline grows with model scale. By making environment design itself a learnable component, SPADE takes a concrete step toward open-ended self-improvement."
+    ]
+  },
+  {
+    "key": "facet",
+    "arxiv": "2608.18580",
+    "title": "FACET: Preserving Source Intent and Executable State in Terminal Task Synthesis",
+    "authors": [
+      "Shi, Kou",
+      "Wang, Zun",
+      "Su, Qisheng",
+      "Huang, Shiting",
+      "Zhang, Ziao",
+      "Fang, Zhen",
+      "Ren, Qingnan",
+      "Liu, Jin",
+      "Zeng, Yu",
+      "Zhao, Yiming",
+      "Chen, Lin",
+      "Chen, Zehui",
+      "Zhao, Feng"
+    ],
+    "date": "2026/08/19",
+    "url": "https://arxiv.org/abs/2608.18580",
+    "abstract": [
+      "Training terminal agents requires scalable executable supervision, yet synthesizing high-quality terminal tasks remains challenging. Each task couples an instruction, an initialized environment, a reference solution, and an executable verifier; if these artifacts are generated from inconsistent assumptions, the resulting task may be unsolvable or incorrectly evaluated. Meanwhile, multi-stage synthesis can discard the goals, dependencies, state transitions, and procedural constraints encoded in the original sources. We present FACET (Fine-grained Agentic Construction of Executable Tasks), a framework that addresses both information preservation and cross-artifact consistency. FACET reconstructs related agent skills into coherent, information-rich scenarios, then realizes and repairs the execution environment before generating the final task artifacts. The resulting container state serves as shared grounding for the instruction, solution, and verifier, while execution-based validation and targeted repair correct artifact-specific failures without unnecessarily regenerating valid components. FACET produces complex terminal tasks with dense executable checks, and successful trajectories collected from these tasks provide effective, data-efficient supervision. Fine-tuning models across multiple scales consistently improves performance on Terminal-Bench 2.1, while analyses of alternative generation schemes support the importance of environment-grounded construction for task validity and solution-verifier alignment. These results establish source-intent preservation and shared executable-state grounding as key principles for scalable terminal-task synthesis."
+    ]
+  },
+  {
+    "key": "ace",
+    "arxiv": "2608.27260",
+    "title": "What Makes Good Agentic Data? An ACE Lens on Data Generation for LLM Agents",
+    "authors": [
+      "Zeng, Xingshan",
+      "Xu, Zishan",
+      "Zhang, Boju",
+      "Wu, Yuzhou",
+      "Wang, Lingzhi",
+      "Lin, Jianghao",
+      "Li, Liangyou",
+      "Wang, Yasheng",
+      "Shang, Lifeng",
+      "Jiang, Xin",
+      "Zhang, Weinan",
+      "Yu, Yong",
+      "Liu, Qun",
+      "Liu, Weiwen"
+    ],
+    "date": "2026/08/27",
+    "url": "https://arxiv.org/abs/2608.27260",
+    "abstract": [
+      "LLM agents increasingly rely on generated interaction data to learn how to interact with external environments. Agentic data generation must maintain consistency among environments, tasks, interactions, and success signals while producing experience that is useful rather than merely abundant. Existing work spans many agent domains, but domain-centered organization and heterogeneous evaluation often obscure common generation mechanisms and conflate candidate construction with verification and selection. This work develops a two-level framework for the field. First, we represent agentic data as a common factorized object $(E,q,\\tau,v)$, comprising an environment specification, task signal, interaction realization, and optional verifier. We organize generation paradigms by their primary anchor and dependency structure. Second, we formulate generation as constrained distribution design through the Accuracy-Complexity-divErsity (ACE) lens. Accuracy establishes the feasible support of grounded and internally consistent data. Within this support, Complexity places learning mass relative to the capability of a declared learner and execution configuration, while divErsity controls coverage and redundancy of data. Using this framework, we explore how prior work verifies generated experience, constructs and calibrates difficulty, and expands behavioral coverage. The literature reveals a shift toward execution-grounded accuracy, learner-relative complexity, and diversity beyond surface variation or dataset size. We further discuss broader directions and emerging trends in agentic data generation through the ACE lens, including their implications for scaling, data sources, training regimes and adaptive learning. Overall, the central challenge is not simply to generate more data, but to continually allocate valid, informative, and non-redundant experience as agents and environments evolve."
+    ]
+  },
+  {
+    "key": "autodata",
+    "arxiv": "2606.25996",
+    "title": "Autodata: An agentic data scientist to create high quality synthetic data",
+    "authors": [
+      "Kulikov, Ilia",
+      "Whitehouse, Chenxi",
+      "Wu, Tianhao",
+      "Nie, Yixin",
+      "Saha, Swarnadeep",
+      "Helenowski, Eryk",
+      "Yuan, Weizhe",
+      "Golovneva, Olga",
+      "Lanchantin, Jack",
+      "Bachrach, Yoram",
+      "Foerster, Jakob",
+      "Li, Xian",
+      "Fang, Han",
+      "Sukhbaatar, Sainbayar",
+      "Weston, Jason"
+    ],
+    "date": "2026/06/24",
+    "url": "https://arxiv.org/abs/2606.25996",
+    "abstract": [
+      "We introduce Autodata, a general method that enables AI agents to act as data scientists who build high quality training and evaluation data. We show how to train (meta-optimize) such a data scientist agent, so that it learns to create even stronger data. We describe the overall formulation, and a specific practical implementation, Agentic Self-Instruct. We conduct experiments on computer science research tasks, legal reasoning tasks and reasoning with mathematical objects, where we obtain improved results compared to classical synthetic dataset creation methods. Further, meta-optimizing the data scientist agent itself delivers an even larger performance uplift. Agentic data creation provides a way to convert increased inference compute into higher quality model training. Overall, we believe this direction has the potential to change the way we build AI data."
+    ]
+  },
+  {
+    "key": "envscaler",
+    "arxiv": "2601.05808",
+    "title": "EnvScaler: Scaling Tool-Interactive Environments for LLM Agent via Programmatic Synthesis",
+    "authors": [
+      "Song, Xiaoshuai",
+      "Chang, Haofei",
+      "Dong, Guanting",
+      "Zhu, Yutao",
+      "Wen, Ji-Rong",
+      "Dou, Zhicheng"
+    ],
+    "date": "2026/01/09",
+    "url": "https://arxiv.org/abs/2601.05808",
+    "abstract": [
+      "Large language models (LLMs) are expected to be trained to act as agents in various real-world environments, but this process relies on rich and varied tool-interaction sandboxes. However, access to real systems is often restricted; LLM-simulated environments are prone to hallucinations and inconsistencies; and manually built sandboxes are hard to scale. In this paper, we propose EnvScaler, an automated framework for scalable tool-interaction environments via programmatic synthesis. EnvScaler comprises two components. First, SkelBuilder constructs diverse environment skeletons through topic mining, logic modeling, and quality evaluation. Then, ScenGenerator generates multiple task scenarios and rule-based trajectory validation functions for each environment. With EnvScaler, we synthesize 191 environments and about 7K scenarios, and apply them to Supervised Fine-Tuning (SFT) and Reinforcement Learning (RL) for Qwen3 series models. Results on three benchmarks show that EnvScaler significantly improves LLMs' ability to solve tasks in complex environments involving multi-turn, multi-tool interactions. We release our code and data at https://github.com/RUC-NLPIR/EnvScaler."
+    ]
+  },
+  {
+    "key": "scaleenv",
+    "arxiv": "2602.06820",
+    "title": "ScaleEnv: Scaling Environment Synthesis from Scratch for Generalist Interactive Tool-Use Agent Training",
+    "authors": [
+      "Tu, Dunwei",
+      "Hao, Hongyan",
+      "Yang, Hansi",
+      "Chen, Yihao",
+      "Zhang, Yi-Kai",
+      "Xia, Zhikang",
+      "Yang, Yu",
+      "Sun, Yueqing",
+      "Liu, Xingchen",
+      "Shen, Furao",
+      "Gu, Qi",
+      "Su, Hui",
+      "Cai, Xunliang"
+    ],
+    "date": "2026/02/06",
+    "url": "https://arxiv.org/abs/2602.06820",
+    "abstract": [
+      "Training generalist agents capable of adapting to diverse scenarios requires interactive environments for self-exploration. However, interactive environments remain critically scarce, and existing synthesis methods suffer from significant limitations regarding environmental diversity and scalability. To address these challenges, we introduce ScaleEnv, a framework that constructs fully interactive environments and verifiable tasks entirely from scratch. Specifically, ScaleEnv ensures environment reliability through procedural testing, and guarantees task completeness and solvability via tool dependency graph expansion and executable action verification. By enabling agents to learn through exploration within ScaleEnv, we demonstrate significant performance improvements on unseen, multi-turn tool-use benchmarks such as $\\tau^2$-Bench and VitaBench, highlighting strong generalization capabilities. Furthermore, we investigate the relationship between increasing number of domains and model generalization performance, providing empirical evidence that scaling environmental diversity is critical for robust agent learning."
+    ]
+  },
+  {
+    "key": "awm",
+    "arxiv": "2602.10090",
+    "title": "Agent World Model: Infinity Synthetic Environments for Agentic Reinforcement Learning",
+    "authors": [
+      "Wang, Zhaoyang",
+      "Xu, Canwen",
+      "Liu, Boyi",
+      "Wang, Yite",
+      "Han, Siwei",
+      "Yao, Zhewei",
+      "Yao, Huaxiu",
+      "He, Yuxiong"
+    ],
+    "date": "2026/02/10",
+    "url": "https://arxiv.org/abs/2602.10090",
+    "abstract": [
+      "Recent advances in large language model (LLM) have empowered autonomous agents to perform multi-turn interactions with tools and environments. However, scaling such agent training is limited by the lack of diverse and reliable environments. In this paper, we propose Agent World Model (AWM), a fully synthetic environment generation pipeline. Using this pipeline, we scale to 1,000 environments covering everyday scenarios, in which agents can interact with rich toolsets and obtain high-quality observations. Notably, these environments are code-driven and backed by databases, providing more reliable and consistent state transitions than environments simulated by LLMs. Moreover, they enable more efficient agent interaction compared with collecting trajectories from realistic environments. To demonstrate the effectiveness of this resource, we perform large-scale reinforcement learning for multi-turn tool-use agents. Thanks to the fully executable environments and accessible database states, we can also design reliable reward functions. Experiments on three benchmarks show that training exclusively in synthetic environments, rather than benchmark-specific ones, yields strong out-of-distribution generalization. The code is available at https://github.com/Snowflake-Labs/agent-world-model."
+    ]
+  },
+  {
+    "key": "envfactory",
+    "arxiv": "2605.18703",
+    "title": "EnvFactory: Scaling Tool-Use Agents via Executable Environments Synthesis and Robust RL",
+    "authors": [
+      "Xu, Minrui",
+      "Wang, Zilin",
+      "DENG, Mengyi",
+      "Li, Zhiwei",
+      "Yang, Zhicheng",
+      "Zhu, Xiao",
+      "Liu, Yinhong",
+      "Zhu, Boyu",
+      "Huang, Baiyu",
+      "Chen, Chao",
+      "Deng, Heyuan",
+      "Mi, Fei",
+      "Shang, Lifeng",
+      "Zeng, Xingshan",
+      "Guo, Zhijiang"
+    ],
+    "date": "2026/05/18",
+    "url": "https://arxiv.org/abs/2605.18703",
+    "abstract": [
+      "Equipping LLMs with tool-use capabilities via Agentic Reinforcement Learning (Agentic RL) is bottlenecked by two challenges: the lack of scalable, robust execution environments and the scarcity of realistic training data that captures implicit human reasoning. Existing approaches depend on costly real-world APIs, hallucination-prone LLM simulators, or synthetic environments that are often single-turn or depend on pre-collected documents. Moreover, synthetic trajectories are frequently over-specified, resembling instruction sequences rather than natural human intents, reducing their effectiveness for RL training. We introduce EnvFactory, a fully automated framework that addresses both challenges. EnvFactory autonomously explores and verifies stateful, executable tool environments from authentic resources, and synthesizes natural multi-turn trajectories through topology-aware sampling and calibrated refinement, producing grounded queries with implicit intents. Using only 85 verified environments across 7 domains, EnvFactory generates 2,575 SFT and RL trajectories. Despite using significantly fewer environments than prior work, which are often 5 times more, EnvFactory achieves superior training efficiency and downstream performance, improving Qwen3-series models by up to +15% on BFCLv3, +8.6% on MCP-Atlas, and +6% on conversational benchmarks including $\\tau^2$-Bench and VitaBench. By fully automating both environment construction and trajectory synthesis, EnvFactory provides a scalable, extensible, and robust foundation for Agentic RL."
+    ]
+  },
+  {
+    "key": "agentscaler",
+    "arxiv": "2509.13311",
+    "title": "Towards General Agentic Intelligence via Environment Scaling",
+    "authors": [
+      "Fang, Runnan",
+      "Cai, Shihao",
+      "Li, Baixuan",
+      "Wu, Jialong",
+      "Li, Guangyu",
+      "Yin, Wenbiao",
+      "Wang, Xinyu",
+      "Wang, Xiaobin",
+      "Su, Liangcai",
+      "Zhang, Zhen",
+      "Wu, Shibin",
+      "Tao, Zhengwei",
+      "Jiang, Yong",
+      "Xie, Pengjun",
+      "Huang, Fei",
+      "Zhou, Jingren"
+    ],
+    "date": "2025/09/16",
+    "url": "https://arxiv.org/abs/2509.13311",
+    "abstract": [
+      "Advanced agentic intelligence is a prerequisite for deploying Large Language Models in practical, real-world applications. Diverse real-world APIs demand precise, robust function-calling intelligence, which needs agents to develop these capabilities through interaction in varied environments. The breadth of function-calling competence is closely tied to the diversity of environments in which agents are trained. In this work, we scale up environments as a step towards advancing general agentic intelligence. This gives rise to two central challenges: (i) how to scale environments in a principled manner, and (ii) how to effectively train agentic capabilities from experiences derived through interactions with these environments. To address these, we design a scalable framework that automatically constructs heterogeneous environments that are fully simulated, systematically broadening the space of function-calling scenarios. We further adapt a two-phase agent fine-tuning strategy: first endowing agents with fundamental agentic capabilities, then specializing them for domain-specific contexts. Extensive experiments on agentic benchmarks, tau-bench, tau2-Bench, and ACEBench, demonstrate that our trained model, AgentScaler, significantly enhances the function-calling capability of models."
+    ]
+  },
+  {
+    "key": "agentworld",
+    "arxiv": "2604.18292",
+    "title": "Agent-World: Scaling Real-World Environment Synthesis for Evolving General Agent Intelligence",
+    "authors": [
+      "Dong, Guanting",
+      "Lu, Junting",
+      "Huang, Junjie",
+      "Zhong, Wanjun",
+      "Liu, Longxiang",
+      "Huang, Shijue",
+      "Li, Zhenyu",
+      "Zhao, Yang",
+      "Song, Xiaoshuai",
+      "Li, Xiaoxi",
+      "Jin, Jiajie",
+      "Zhu, Yutao",
+      "Wang, Hanbin",
+      "Lei, Fangyu",
+      "Luo, Qinyu",
+      "Chen, Mingyang",
+      "Chen, Zehui",
+      "Feng, Jiazhan",
+      "Wen, Ji-Rong",
+      "Dou, Zhicheng"
+    ],
+    "date": "2026/04/20",
+    "url": "https://arxiv.org/abs/2604.18292",
+    "abstract": [
+      "Large language models are increasingly expected to serve as general-purpose agents that interact with external, stateful tool environments. The Model Context Protocol (MCP) and broader agent skills offer a unified interface for connecting agents with scalable real-world services, but training robust agents remains limited by the lack of realistic environments and principled mechanisms for life-long learning. In this paper, we present \\textbf{Agent-World}, a self-evolving training arena for advancing general agent intelligence through scalable environments. Agent-World has two main components: (1) Agentic Environment-Task Discovery, which autonomously explores topic-aligned databases and executable tool ecosystems from thousands of real-world environment themes and synthesizes verifiable tasks with controllable difficulty; and (2) Continuous Self-Evolving Agent Training, which combines multi-environment reinforcement learning with a self-evolving agent arena that automatically identifies capability gaps through dynamic task synthesis and drives targeted learning, enabling the co-evolution of agent policies and environments. Across 23 challenging agent benchmarks, Agent-World-8B and 14B consistently outperforms strong proprietary models and environment scaling baselines. Further analyses reveal scaling trends in relation to environment diversity and self-evolution rounds, offering insights for building general agent intelligence."
+    ]
+  },
+  {
+    "key": "datamaster",
+    "arxiv": "2605.10906",
+    "title": "DataMaster: Data-Centric Autonomous AI Research",
+    "authors": [
+      "Du, Yaxin",
+      "Yang, Xiyuan",
+      "Zhou, Zhifan",
+      "Liu, Wanxu",
+      "Lei, Zixing",
+      "Chen, Zimeng",
+      "Liu, Fenyi",
+      "Wu, Haotian",
+      "Cai, Yuzhu",
+      "Liu, Zexi",
+      "Zhu, Xinyu",
+      "Wang, WenHao",
+      "Zhang, Linfeng",
+      "Qian, Chen",
+      "Chen, Siheng"
+    ],
+    "date": "2026/05/11",
+    "url": "https://arxiv.org/abs/2605.10906",
+    "abstract": [
+      "As model families, training recipes, and compute budgets become increasingly standardized, further gains in machine learning systems depend increasingly on data. Yet data engineering remains largely manual and ad hoc: practitioners repeatedly search for external datasets, adapt them to existing pipelines, validate candidate data through downstream training, and carry forward lessons from prior attempts. We study task-conditioned autonomous data engineering, where an autonomous agent improves a fixed learning algorithm by optimizing only the data side, including external data discovery, data selection and composition, cleaning and transformation. The goal is to obtain a stronger downstream solution while leaving the learning algorithm unchanged. To address the open-ended search space, branch-dependent refinement, and delayed validation inherent in autonomous data engineering, we propose DataMaster, a data-agent framework that integrates tree-structured search, shared candidate data, and cumulative memory. DataMaster consists of three key components: a DataTree that organizes alternative data-engineering branches, a shared Data Pool that stores discovered external data sources for reuse, and a Global Memory that records node outcomes, artifacts, and reusable findings. Together, these components allow the agent to discover candidate data, construct executable training inputs, evaluate them through downstream feedback, and carry useful evidence across branches. We evaluate DataMaster on two types of benchmarks, MLE-Bench Lite and PostTrainBench. On MLE-Bench Lite, it improves medal rate by 32.27% over the initial score; on PostTrainBench, it surpasses the instruct model on GPQA (31.02% vs 30.35%)."
+    ]
+  },
+  {
+    "key": "rods",
+    "arxiv": "2606.19047",
+    "title": "RODS: Reward-Driven Online Data Synthesis for Multi-Turn Tool-Use Agents",
+    "authors": [
+      "Fang, Ruishan",
+      "Lu, Siyuan",
+      "Zhuang, Chenyi",
+      "Lin, Tao"
+    ],
+    "date": "2026/06/17",
+    "url": "https://arxiv.org/abs/2606.19047",
+    "abstract": [
+      "Multi-turn tool-use RL is bottlenecked by the rapid depletion of informative samples in static datasets. We observe that the gradient signal in GRPO concentrates on tasks with the highest rollout reward variance, a consequence of the Popoviciu upper bound. Consequently, samples near the agent's capability boundary -- where successes and failures are roughly balanced -- contribute disproportionately large policy gradients. As training progresses, this boundary continuously shifts, which gradually depletes the pool of informative samples in a static dataset. We propose RODS (Reward-driven Online Data Synthesis) to resolve this depletion. RODS closes the loop between RL training and data generation by repurposing the progress reward variance as a practical, zero-cost boundary detector that requires no extra inference beyond the rollouts already computed for training. It continuously identifies such boundary samples, synthesizes new multi-turn variants matching their structural complexity (e.g., API topology and dependency depth) via a skill-aligned resampling pipeline, and manages a dynamic replay buffer that co-evolves with the policy. Starting from 400 human seeds and maintaining an active training pool of ~800 samples, RODS achieves comparable performance to a 17K-sample offline pipeline while requiring roughly 20x fewer trajectories, and improves over fixed-data RL and environment augmentation in our controlled setting."
+    ]
+  },
+  {
+    "key": "writ",
+    "arxiv": "2606.02908",
+    "title": "WRIT: Write-Read Intensive Trajectory Synthesis for Multi-Turn User-Facing Agents",
+    "authors": [
+      "Gu, Hengrui",
+      "Han, Xiaotian",
+      "Zhou, Kaixiong"
+    ],
+    "date": "2026/06/01",
+    "url": "https://arxiv.org/abs/2606.02908",
+    "abstract": [
+      "Multi-turn user-facing agents must infer user intent from incomplete requests, collect missing information through dialogue and tools, and execute valid actions. A training trajectory records this process as an interleaved sequence of user messages, agent responses, tool calls, etc. Synthesizing sufficiently complex trajectory has become a central route to train agents: existing pipelines often increase difficulty by composing multiple user requests into longer tasks, producing write-intensive trajectories that train sequential execution. We argue that a single write decision can itself be difficult when the agent must gather and compare substantial read-tool evidence before its arguments become identifiable, a challenge that write-intensive data alone cannot address. Guided by this insight, we propose WRIT (\\uline{W}rite-\\uline{R}ead \\uline{I}ntensive \\uline{T}rajectory Synthesis), a pipeline for synthesizing multi-turn agent training trajectories along two complexity axes: the number of write decisions in a task and the evidence burden of each individual decision. WRIT first generates write-intensive and read-heavy tasks. It then diversifies user behavior instructions to reflect realistic conversational variation, and finally simulates agent-user interactions in an executable environment to produce complete training trajectories. The resulting data trains agents not only for longer task execution, but also for robust, evidence-grounded decision making under high information load. With only 2K synthesized trajectories, a 4B model trained on WRIT outperforms GPT-5.1 no-think on $\\tau^2$-bench and substantially reduces inference-time token usage, showing that compact SFT data can convert part of expensive test-time reasoning into efficient agent behavior."
+    ]
+  },
+  {
+    "key": "agentomnia",
+    "arxiv": "2607.23124",
+    "title": "AgentOmnia: Scaling Agentic Models for Full-Scenario Applications",
+    "authors": [
+      "Jiang, Hao",
+      "Xin, Gangtao",
+      "Huang, Yingdi",
+      "Zhu, Guojie",
+      "Zhang, Jiangshan",
+      "Lin, Xinyuan",
+      "Xu, Yunkun",
+      "Shen, Chengyu",
+      "Fei, Wenlong",
+      "Li, Jiawei",
+      "Fu, Yujie",
+      "Kang, Sichen",
+      "Xie, Tingyu",
+      "Hu, Yedi",
+      "Zhang, Jingren",
+      "Gao, Hongcheng",
+      "Zeng, Jianshu",
+      "Chen, Chong",
+      "Guo, Chang",
+      "Feng, Chao",
+      "Wang, Feng",
+      "Lin, Fulin",
+      "Ma, Jinchao",
+      "Mei, Lang",
+      "Huang, Li",
+      "Liu, Liyan",
+      "He, Qing",
+      "Tao, Shuting",
+      "Mo, Siyu",
+      "Chen, Xiangnan",
+      "Yu, Xiaohan",
+      "Li, Xiaoyang",
+      "Hou, Yanheng",
+      "Wu, Yanyu",
+      "Yang, Zhihan",
+      "Zhang, Wentao",
+      "Gao, Yang",
+      "Cao, Zhao"
+    ],
+    "date": "2026/07/25",
+    "url": "https://arxiv.org/abs/2607.23124",
+    "abstract": [
+      "Large language model agents have advanced rapidly, yet progress remains fragmented across domains, capabilities, task difficulty, and interaction settings. We frame this as full-scenario agentic scaling and present AgentOmnia, a framework coordinating task-space definition, data synthesis, post-training, evaluation, and improvement across To-Consumer (ToC), To-Business (ToB), and To-Employee (ToE) applications. An extensible Domain x Capability x Atomic Difficulty taxonomy aligns these stages and enables fine-grained diagnosis with OmniaBench. AgentOmnia combines bidirectional environment-task synthesis with tool-dependency, program-structured, and solver-based pipelines, constructing 5,018 stateful environments with 255,375 tools and 52,361 tasks. Programs, solvers, and verifiers provide correctness signals, while supervised fine-tuning, online agentic reinforcement learning, and a rollback curriculum support post-training. Evaluation failures translate into Product Requirement Documents (PRDs) for targeted self-evolution. Starting from Qwen3-30B-A3B-Thinking-2507, AgentOmnia raises the pass rate on the OmniaBench challenging subset from 9.16% to 37.11% and the macro-average across OmniaBench, $\\tau^2$-Bench, DeepPlanning, and VitaBench from 22.86% to 41.69%. Under a unified protocol,it leads the evaluated agentic post-trained baselines on OmniaBench and retains the highest four-benchmark macro-average. It also surpasses Qwen3-235B-A22B-Thinking-2507 on all four benchmarks and exceeds Qwen3.5-35B-A3B on the macro-average. Gains span three application splits, ten capability dimensions, eight atomic-difficulty factors, and 76 of 90 level-1 domains, indicating broad rather than category-specific improvement. A one-round study provides initial evidence for PRD-guided self-evolution, motivating validation at larger scales and in industrial settings."
+    ]
+  },
+  {
+    "key": "paired",
+    "arxiv": "2012.02096",
+    "title": "Emergent Complexity and Zero-shot Transfer via Unsupervised Environment Design",
+    "authors": [
+      "Dennis, Michael",
+      "Jaques, Natasha",
+      "Vinitsky, Eugene",
+      "Bayen, Alexandre",
+      "Russell, Stuart",
+      "Critch, Andrew",
+      "Levine, Sergey"
+    ],
+    "date": "2020/12/03",
+    "url": "https://arxiv.org/abs/2012.02096",
+    "abstract": [
+      "A wide range of reinforcement learning (RL) problems - including robustness, transfer learning, unsupervised RL, and emergent complexity - require specifying a distribution of tasks or environments in which a policy will be trained. However, creating a useful distribution of environments is error prone, and takes a significant amount of developer time and effort. We propose Unsupervised Environment Design (UED) as an alternative paradigm, where developers provide environments with unknown parameters, and these parameters are used to automatically produce a distribution over valid, solvable environments. Existing approaches to automatically generating environments suffer from common failure modes: domain randomization cannot generate structure or adapt the difficulty of the environment to the agent's learning progress, and minimax adversarial training leads to worst-case environments that are often unsolvable. To generate structured, solvable environments for our protagonist agent, we introduce a second, antagonist agent that is allied with the environment-generating adversary. The adversary is motivated to generate environments which maximize regret, defined as the difference between the protagonist and antagonist agent's return. We call our technique Protagonist Antagonist Induced Regret Environment Design (PAIRED). Our experiments demonstrate that PAIRED produces a natural curriculum of increasingly complex environments, and PAIRED agents achieve higher zero-shot transfer performance when tested in highly novel environments."
+    ]
+  },
+  {
+    "key": "plr",
+    "arxiv": "2010.03934",
+    "title": "Prioritized Level Replay",
+    "authors": [
+      "Jiang, Minqi",
+      "Grefenstette, Edward",
+      "Rocktäschel, Tim"
+    ],
+    "date": "2020/10/08",
+    "url": "https://arxiv.org/abs/2010.03934",
+    "abstract": [
+      "Environments with procedurally generated content serve as important benchmarks for testing systematic generalization in deep reinforcement learning. In this setting, each level is an algorithmically created environment instance with a unique configuration of its factors of variation. Training on a prespecified subset of levels allows for testing generalization to unseen levels. What can be learned from a level depends on the current policy, yet prior work defaults to uniform sampling of training levels independently of the policy. We introduce Prioritized Level Replay (PLR), a general framework for selectively sampling the next training level by prioritizing those with higher estimated learning potential when revisited in the future. We show TD-errors effectively estimate a level's future learning potential and, when used to guide the sampling procedure, induce an emergent curriculum of increasingly difficult levels. By adapting the sampling of training levels, PLR significantly improves sample efficiency and generalization on Procgen Benchmark--matching the previous state-of-the-art in test return--and readily combines with other methods. Combined with the previous leading method, PLR raises the state-of-the-art to over 76% improvement in test return relative to standard RL baselines."
+    ]
+  },
+  {
+    "key": "grpo",
+    "arxiv": "2402.03300",
+    "title": "DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models",
+    "authors": [
+      "Shao, Zhihong",
+      "Wang, Peiyi",
+      "Zhu, Qihao",
+      "Xu, Runxin",
+      "Song, Junxiao",
+      "Bi, Xiao",
+      "Zhang, Haowei",
+      "Zhang, Mingchuan",
+      "Li, Y. K.",
+      "Wu, Y.",
+      "Guo, Daya"
+    ],
+    "date": "2024/02/05",
+    "url": "https://arxiv.org/abs/2402.03300",
+    "abstract": [
+      "Mathematical reasoning poses a significant challenge for language models due to its complex and structured nature. In this paper, we introduce DeepSeekMath 7B, which continues pre-training DeepSeek-Coder-Base-v1.5 7B with 120B math-related tokens sourced from Common Crawl, together with natural language and code data. DeepSeekMath 7B has achieved an impressive score of 51.7% on the competition-level MATH benchmark without relying on external toolkits and voting techniques, approaching the performance level of Gemini-Ultra and GPT-4. Self-consistency over 64 samples from DeepSeekMath 7B achieves 60.9% on MATH. The mathematical reasoning capability of DeepSeekMath is attributed to two key factors: First, we harness the significant potential of publicly available web data through a meticulously engineered data selection pipeline. Second, we introduce Group Relative Policy Optimization (GRPO), a variant of Proximal Policy Optimization (PPO), that enhances mathematical reasoning abilities while concurrently optimizing the memory usage of PPO."
+    ]
+  },
+  {
+    "key": "tau2",
+    "arxiv": "2506.07982",
+    "title": "$\\tau^2$-Bench: Evaluating Conversational Agents in a Dual-Control Environment",
+    "authors": [
+      "Barres, Victor",
+      "Dong, Honghua",
+      "Ray, Soham",
+      "Si, Xujie",
+      "Narasimhan, Karthik"
+    ],
+    "date": "2025/06/09",
+    "url": "https://arxiv.org/abs/2506.07982",
+    "abstract": [
+      "Existing benchmarks for conversational AI agents simulate single-control environments, where only the AI agent can use tools to interact with the world, while the user remains a passive information provider. This differs from real-world scenarios like technical support, where users need to actively participate in modifying the state of the (shared) world. In order to address this gap, we introduce $\\tau^2$-bench, with four key contributions: 1) A novel Telecom dual-control domain modeled as a Dec-POMDP, where both agent and user make use of tools to act in a shared, dynamic environment that tests both agent coordination and communication, 2) A compositional task generator that programmatically creates diverse, verifiable tasks from atomic components, ensuring domain coverage and controlled complexity, 3) A reliable user simulator tightly coupled with the environment, whose behavior is constrained by tools and observable states, improving simulation fidelity, 4) Fine-grained analysis of agent performance through multiple ablations including separating errors arising from reasoning vs communication/coordination. In particular, our experiments show significant performance drops when agents shift from no-user to dual-control, highlighting the challenges of guiding users. Overall, $\\tau^2$-bench provides a controlled testbed for agents that must both reason effectively and guide user actions."
+    ]
+  },
+  {
+    "key": "automationbench",
+    "arxiv": "2604.18934",
+    "title": "AutomationBench",
+    "authors": [
+      "Shepard, Daniel",
+      "Salimans, Robin"
+    ],
+    "date": "2026/04/21",
+    "url": "https://arxiv.org/abs/2604.18934",
+    "abstract": [
+      "Existing AI benchmarks for software automation rarely combine cross-application coordination, autonomous API discovery, and policy adherence. Real business workflows demand all three: a single task may span a CRM, inbox, calendar, and messaging platform - requiring the agent to find the right endpoints, follow a policy document, and write correct data to each system. To address this gap, we introduce AutomationBench, a benchmark for evaluating AI agents on cross-application workflow orchestration via REST APIs. Drawing on real workflow patterns from Zapier's platform, tasks span Sales, Marketing, Operations, Support, Finance, and HR domains. Agents must discover relevant endpoints themselves, follow layered business rules, and navigate environments with irrelevant and sometimes misleading records. Grading is programmatic and end-state only: whether the correct data ended up in the right systems. Even the best frontier models currently score below 10%. AutomationBench provides a challenging, realistic measure of where current models stand relative to the agentic capabilities businesses actually need."
+    ]
+  },
+  {
+    "key": "rsibenchdata",
+    "arxiv": "2607.25886",
+    "title": "RSIBench-Data: Benchmarking Data-Centric Research for Recursive Self-Improvement",
+    "authors": [
+      "Meng, Fanqing",
+      "Du, Lingxiao",
+      "Chen, Qiguang",
+      "Zhao, Ziqi",
+      "Lu, Haocheng",
+      "Hu, Mengkang",
+      "Shieh, Michael Qizhe"
+    ],
+    "date": "2026/07/28",
+    "url": "https://arxiv.org/abs/2607.25886",
+    "abstract": [
+      "Recursive self-improvement requires turning evidence of model failures into better models. Data-centric post-training research entails diagnosing capability gaps, designing and validating training-data strategies, and learning from checkpoint feedback. Can LLM agents automate this loop? Existing benchmarks entangle research decisions with optimization, serving, evaluation, and systems implementation, obscuring agents' research capability. We introduce RSIBench-Data, a controlled benchmark of LLM agents as data-centric researchers with a fixed post-training stack. Agents iteratively revise training-data strategies for a fixed target model; training and serving use Tinker-backed services, official evaluation runs through Harbor and E2B sandboxes, and budgets are fixed across agents. We evaluate four frontier agents on six benchmarks across software engineering, terminal use, scientific question answering, and mathematics. Agents demonstrate core data-centric research capabilities: in 58.33\\% of settings, they improve upon the first valid attempt by refining strategies from feedback. However, improvement is inconsistent. Among searches continuing after the best observed score, 78.26\\% end with a lower-scoring final attempt, while the rest only recover the same peak. A strong candidate may therefore appear early or midway through a run even as later revisions fail. Trajectory analysis identifies four patterns in stronger runs: accurate hypotheses, validation-grounded supervision, behavior-aligned data, and preservation of strong checkpoints. These findings suggest that current agents can make useful data-centric discoveries but cannot yet translate feedback into consistent improvements. RSIBench-Data provides a measurable, auditable testbed for the research capabilities required for recursive self-improvement. We open-source our code at https://github.com/evolvent-ai/RSIBench-Data."
+    ]
+  }
+]

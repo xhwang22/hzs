@@ -1,0 +1,29 @@
+\section{Experiments}
+\label{sec:experiments}
+
+We report existing-run records, not new experiments executed during manuscript preparation. They include nine completed rounds each of Qwen3-4B-Instruct-2507 on $\tau^2$-Bench and BFCL multi-turn, and ten on native-tool-calling ACEBench-Agent. All three runs were stopped by the operator. ACE records were supplemented on 14 September 2026 at 17:43 UTC, completing test coverage through R10; the other two studies retain their earlier snapshot. Incomplete or cancelled training attempts are not plotted as additional rounds.
+
+\paragraph{Evaluation and training.}
+Fixed dev/test halves contain 139/139 $\tau^2$ tasks (25 airline, 57 retail, 57 telecom per half), 400/400 BFCL tasks (100 per multi-turn subset), and 25/25 ACEBench-Agent tasks (10 multi-step, 15 multi-turn)~\citep{tau2,bfcl,acebench}. Each dev evaluation and each available test evaluation uses three repeats. We report task-weighted success for $\tau^2$ and BFCL and the two-category macro mean for ACE; these are not pass@3 or full-leaderboard results. Test records are not fed to the Planner. All three studies begin with an empty environment bank, generic code examples, and no external grounding corpus.
+
+Training uses full-parameter online GRPO, learning rate $3\times10^{-6}$, fixed-reference KL coefficient 0.005, eight episodes per Task, and at most eight Tasks per update, retaining tail batches. The per-round target is 96 Tasks, but exact allocations and construction failures can reduce the realized batch. Planner weights remain fixed (Astra); analysis, implementation, and screening use GPT-5.5; model-backed users use GPT-5.4. Each study has one evolution/training seed. Three evaluation repeats do not establish cross-seed method reliability. Appendix~\ref{app:versions} records important protocol differences and retained anomalies.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/evolution.pdf}
+\caption{Evolution of $\tau^2$/BFCL/ACE (Val/Test, three repeats) and a separately supplied AppWorld run (Train/Test TGC, shown through R8). Solid/dashed lines denote the two splits; horizontal dotted lines mark their respective baselines at R0. Vertical guides select the earliest best Val checkpoint, or best train TGC for AppWorld; header $\Delta$s use that checkpoint and each split's own baseline (pp). Each panel uses its own round range and independently scaled percentage y-axis.}
+\label{fig:evolution}
+\end{figure}
+
+\input{tables/main_results}
+
+\paragraph{Observed improvement and regression.}
+We apply a dev-only selection rule to the saved trajectories: choose the earliest maximum over the base model and completed checkpoints. BFCL selects R9, scoring 42.08\% on test versus 25.42\% for its matched base model, an observed gain of 16.67 percentage points. Native-FC ACE still selects R3 after all ten rounds, scoring 52.22\% versus 41.11\%; its paired-task interval includes zero, reflecting the small 25-task test set. We do not select ACE's higher R7 test score after seeing it. $\tau^2$ selects R5 with 39.33\% test success but falls to 34.05\% at R9. Its historical 31.89\% test base predates a replay repair, so we report no matched-protocol baseline gain.
+
+Figure~\ref{fig:evolution} also shows why a single endpoint or synthetic reward curve is insufficient. BFCL's improvement is not strictly monotone; $\tau^2$ loses part of its intermediate performance; ACE's test score reaches 56.11\% at R7 and finishes at 51.11\% in R10. The trajectories demonstrate that the implemented loop can produce useful checkpoints, not that environment revision caused the gains relative to equally budgeted fixed generators.
+
+\paragraph{Controls still required.}
+The decisive study should compare a frozen early library with fresh task resampling, sampler/allocation-only adaptation, and full program revision under matched training and research budgets. Further ablations should remove maintained experience, stale versus refreshed target evidence, and the stable requirement map while preserving source access. A comparable SPADE-style or EnvHarness-style adaptation must disclose differences in target-code and development-feedback access. None of these controls has been measured in the present snapshot; we do not fill their cells with literature scores from different protocols.
+
+\paragraph{Uncertainty and cost.}
+Table~\ref{tab:main} uses 10,000 paired bootstrap resamples of test tasks within fixed subsets, keeping each task's three repeats together and preserving the benchmark aggregation. These intervals measure finite-test-set uncertainty conditional on a trained run, not training-seed variability. The recorded rounds contain 846, 809, and 626 distinct training Tasks for $\tau^2$, BFCL, and ACE respectively, with eight episodes per Task. Round counts do not fix training budgets: native ACE uses 96 Tasks in R1, 38 in R9, and 52 in R10. Final cost comparisons must also count analysis, planning, failed implementations, screening, serving, and evaluation, including queues and restarts. We make no end-to-end efficiency claim from task counts alone.

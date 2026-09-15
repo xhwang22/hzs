@@ -1,14 +1,48 @@
 \documentclass{article}
-\usepackage{graphicx} % Required for inserting images
+\usepackage{iclr2027_conference,times}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{graphicx,booktabs,array,tabularx}
+\usepackage{xcolor}
+\usepackage{algorithm,algpseudocode}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{url}
+\hypersetup{colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black}
 
-\title{hzs}
-\author{Xiaohua Wang}
-\date{September 2026}
+\newcommand{\method}{\textsc{EnvOpt}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\ind}{\mathbf{1}}
+\newcommand{\todo}[1]{\textcolor{red!65!black}{[TODO: #1]}}
+\newcommand{\pending}{\textcolor{gray}{---}}
+\newcommand{\code}[1]{\texttt{#1}}
+
+\title{EnvOpt: Persistent Environment Evolution\\from Agent Feedback}
+\author{Anonymous authors}
+% Keep \iclrfinalcopy disabled for anonymous review.
 
 \begin{document}
-
 \maketitle
+\begin{abstract}
+Data-centric self-improvement requires turning evidence about a model's limitations into useful training experience. We study tool-using agents when target interaction traces are available but the target environment implementation is not. We present \method{}, which starts from an empty task-environment bank and maintains a persistent library of executable training programs. A fixed Planner combines source-linked trajectory analysis, measured task-linked requirement groups, versioned online rewards and maintained research experience to create, revise, retain or pause environments. Each program jointly defines task sampling, interaction and verification; bounded implementation checks precede fresh online RL without a separate student probe. Updated target behavior informs subsequent research. In preliminary single-seed Qwen3-4B studies, development-selected checkpoints score 42.08\% on BFCL multi-turn test versus a matched 25.42\% base, and 52.22\% on native-tool-calling ACEBench-Agent versus 41.11\%. The latter estimate has substantial small-test-set uncertainty. On $\tau^2$, the selected checkpoint reaches 39.33\% test success but the last declines to 34.05\%. These protocol-qualified trajectories demonstrate useful checkpoints alongside regressions; controlled comparisons are still needed to establish the contribution of persistent environment evolution.
+\end{abstract}
 
-\section{Introduction}
+\input{sections/introduction}
+\input{sections/related_work}
+\input{sections/method}
+\input{sections/experiments}
+\input{sections/discussion}
 
+\section*{AI use statement}
+Generative AI assisted source-code and literature analysis, methodological formulation, drafting, and figure preparation. The research system uses language models for trajectory analysis, planning, program synthesis, solvability review and user simulation; generated-task rewards in the studied cohort are programmatic. Existing experiment records were read to prepare this draft; no new training or benchmark evaluation was run during manuscript preparation. \todo{The authors must verify this statement against the complete research history and review all AI-assisted claims and artifacts before submission.}
+
+\section*{Reproducibility statement}
+The method interfaces, admission rule, and separation of development feedback from final evaluation are specified in Section~\ref{sec:method}. Appendix~\ref{app:protocol} records the experimental information needed for reproducibility. \todo{Add the frozen implementation revision, resolved run configurations, complete artifacts, and an anonymous code supplement after the experiments are finalized.}
+
+\bibliography{references}
+\bibliographystyle{iclr2027_conference}
+
+\clearpage
+\appendix
+\input{sections/appendix}
 \end{document}
