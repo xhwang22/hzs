@@ -1,4 +1,2 @@
-# Preserve upstream template bytes and generated SVG formatting.
+# Preserve upstream template bytes.
 vendor/iclr2027/* -whitespace
-figures/evolution.svg -whitespace
-figures/subsets.svg -whitespace

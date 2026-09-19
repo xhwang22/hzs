@@ -1,0 +1,190 @@
+\section{Behavioral-Coverage Diagnostic}
+\label{app:analysiscoverage}
+
+\phantomsection
+\textbf{Source-grounded construction and refinement.}\quad
+\label{app:analysisconstruction}
+Equations~\ref{eq:mechanismledger}--\ref{eq:residualmap} describe the
+coverage-checked variant evaluated here, not a retroactive change to the
+training-study implementation. Same-task repeats are analyzed together;
+oversized packs are split into complete episodes. The ledger retains
+source-backed statements and their task contexts independently of successive
+drafts. Required behavior remains distinct from observed mastery, and recovered
+errors from unresolved failures. A source ID verifies ancestry, not semantic
+retention; unavailable analyses remain missing evidence.
+
+Hierarchical merging and source-scoped review form a report whose shared
+premises are then factored under a word target. Checks compare its claims with
+their cited mechanisms and public contexts. Local edits repair explicit
+conflicts; residual completion consolidates only unexpressed relations,
+retaining relevant actor, authorization, scope, ordering, and recovery
+conditions. Equivalent content is matched to a literal existing passage
+rather than appended again. Incidental names and repeated narratives may be
+removed, but operative distinctions are retained as separate branches.
+The final variant reuses its own compact draft, local repairs, and
+internal missing-source findings; it does not receive evaluation references,
+judge scores, or the native report's prose. Internal checks remain fallible.
+
+\textbf{Task-linked measurement in the maintained framework.}\quad
+Separately from report construction, the data researcher maintains requirement
+definitions and sets $J_c$ of real public-eval-task IDs. The controller computes
+their performance from recorded outcomes:
+\begin{equation}
+s_t(c)=\frac{1}{|J_c|}\sum_{i\in J_c}
+       \frac{1}{K}\sum_{k=1}^{K}y_{t,i,k},
+\label{eq:capability}
+\end{equation}
+where $K$ is the number of evaluation repeats and $y_{t,i,k}$ the recorded
+outcome. Changed definitions or memberships require recomputing baseline and
+current results on the same membership. Groups may overlap; composite-task
+success does not isolate individual skills. This measurement is not inferred
+from summary frequency or used as the diagnostic's semantic-coverage score.
+Source-to-case queries expose complete permitted interactions and
+cross-checkpoint histories; internal merge ancestry is retained without
+promising arbitrary intermediate-node browsing.
+
+\textbf{Inputs and comparison.}\quad
+We freeze complete initial public-evaluation corpora: BFCL has 400 indexed tasks
+and 1,200 trajectories, $\tau^2$ has 139 tasks and 417 trajectories, and
+ACEBench-Agent has 25 tasks and 75 trajectories. Each task has three evaluation
+repeats; these are not independent analysis seeds. These Qwen3-8B reasoning
+trajectories are separate from the Qwen3-4B training curves. Public/private
+denotes researcher access, not the benchmark's official release status.
+The native analyst uses \texttt{gpt-6-astra}/high in a fresh session with a
+minimal task-and-schema instruction, a 60-minute ceiling, and ordinary coding
+and search tools. It can choose its own strategy and has no imposed report word
+limit. Its three saved reports are fixed for all candidate comparisons.
+
+The refined-map generator uses \texttt{gpt-5.5}/high, complete public task
+evidence and its own intermediate records. It receives neither reference labels
+nor the agent report's prose; only the latter's word count sets a soft 85\%
+length target. The final reports are 3,637, 3,775, and 2,596 words; $\tau^2$
+is shorter than the agent but does not meet that 85\% target. Same-task repeats
+are grouped, oversized groups are split into complete episodes, and shared
+definitions are deduplicated without truncating observations. The initial ACE
+scoped-review pilot supplies system rules and the first user request as extra
+context; later BFCL/$\tau^2$ scoped reviews supply all public requests. Leaf
+extraction and review receive complete episodes in all three corpora.
+
+\textbf{Fixed automatic evaluation.}\quad
+References are independently generated from public trajectories with
+GPT-5.5/high, before seeing the candidate reports, and retain source quotations.
+The same model grades anonymized report pairs as full, partial, missing, or
+contradicted. Full requires preserving the mechanism and its consequential
+scope, condition, actor, or order; mere category overlap is insufficient.
+Only full contributes to the strict score. First average reference units within
+each indexed task, then average tasks; the supplemental metric additionally
+averages fixed subset--family groups equally. Repeat-level evidence does not
+increase the independent task count. The reference inputs, grading prompt,
+batch size (24), model settings, blind seed, and aggregation are unchanged
+across candidates. Literal supporting quotations are checked mechanically.
+
+\begin{table}[ht]
+\centering\small
+\setlength{\tabcolsep}{3.5pt}
+\input{tables/analysis_scores}
+\caption{Task / failure coverage (\%) and report lengths. ``Original'' and
+``paired'' grade the same native report in different judging contexts, not
+different native generations.}
+\label{tab:analysiscoverage}
+\end{table}
+
+\begin{table}[ht]
+\centering\small
+\input{tables/analysis_families}
+\caption{Subset--family-balanced task / failure coverage (\%). Families are a
+fixed diagnostic taxonomy, not an exhaustive ontology of benchmark failures.}
+\end{table}
+
+\textbf{Evaluation provenance and missingness.}\quad
+Sections~\ref{sec:coveragegap} and~\ref{sec:analysiscoverage} use the same final
+paired-evaluation results. Earlier scores are retained as historical results,
+not pooled with that evaluation or interpreted as a same-input repeatability
+test. Saved configurations retain the judge model, prompt, reasoning level,
+batch size, and blind seed; the paired comparison report changes, as do some
+eligible scoring units. The score difference therefore does not isolate judge
+instability, and a downward shift in the baseline is not a method contribution.
+Both current and original agent scores are below the refined map's four coverage
+metrics in every corpus. Historical grades have slightly different questionable
+or unscored units and are not paired causal effect estimates. Within each
+comparison the methods share the same eligible units. BFCL scores 8,327 units
+and ACE 538; $\tau^2$ retains 3,191 of 3,200. Respectively, 75, 14, and 2 units
+are marked questionable and excluded jointly. Original reference annotations
+are unavailable for 7, 13, and 1 trajectories. One bounded format-retry pass
+and the pre-existing valid-paired-unit recovery rule are used; an interrupted
+$\tau^2$ retry is concluded from saved answers without another scoring pass.
+
+Astra/high provides a separate, disagreement-enriched spot audit. BFCL, $\tau^2$,
+and ACE have 22/24, 23/24, and 22/24 evaluable items: 21/23/22 references are
+supported and one BFCL reference is uncertain. Exact first/second-rater label
+agreement for agent/map is 15/22 versus 18/22, 20/23 versus 20/23, and 15/22
+versus 20/22. These samples are not global accuracy estimates or human gold.
+
+\textbf{Illustration and counterexamples.}\quad
+In the ACE recovery example discussed in Section~\ref{sec:analysiscoverage}, a successful purchase is followed by a capacity-blocked
+notification. The agent retrieves messages but reaches its turn limit without
+obtaining a deletion target, deleting, or retrying. The native report mentions
+inbox-cleanup truncation; the refined map preserves the recovery dependency and
+distinguishes interactive authorization from preset deletion. Both graders
+support partial versus full coverage. This is not evidence of deliberate
+abandonment or of successful recovery.
+
+The method still loses information: it compresses a BFCL card-number-as-card-ID
+error and its recovery into a generic identifier warning, and an ACE repeated
+date-argument error after TypeError feedback into a parameter-error category.
+For BFCL prefix-only deletion of a 31-file list, the second grader downgrades
+the map's ``Drafts partial deletion'' from full to partial. A separate purposeful
+four-item BFCL case audit retains three evaluable results and one format
+failure; it does not modify primary scores or enter the main audit counts.
+
+\textbf{Compute and interpretation.}\quad
+Generation costs include reused source extraction and parent stages, not just
+the final compression call. The map uses substantially more computation; input
+includes cached tokens and output includes reasoning tokens. Unknown usage is
+not zero, and token totals across different models are not monetary costs.
+Reference construction, scoring and audit requests are evaluation overhead
+preserved separately in the study logs.
+
+\begin{table}[ht]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\input{tables/analysis_cost}
+\caption{Recorded generation tokens in millions; cached input is a subset of
+input. Unknown-usage requests are disclosed separately. These totals describe
+the studied prototype, not an efficiency-matched comparison.}
+\end{table}
+
+All candidate versions and negative results are retained. The original simple
+merge did not uniformly outperform the agent; scoped expansion improved detail
+but grew long, while the final refinement restored only semantic residuals.
+The final candidate does not dominate every intermediate version on every
+metric. These corpora were used for method development, not an unseen
+confirmation study. The diagnostic supports reduced information loss in this
+setting, not semantic losslessness, a same-model/same-budget causal attribution,
+the independent value of source lookup, or downstream RL improvement. The
+refinement is not retroactively attributed to the historical training runs.
+
+\textbf{Provenance of the motivating cases.}\quad
+Figure~\ref{fig:evidencegaps} reads the final native strict-coverage grades
+directly from the same frozen results as Figure~\ref{fig:analysiscoverage}.
+The archived BFCL case audit uses public trajectory
+\texttt{efefe1b89e2fb4e8382f9a5f0c230912}, preserved locally with the diagnostic
+sources. Six successful file-deletion calls target the first six entries of
+the 31-file listing; the other 25 entries are not targeted. Two subsequent
+directory-removal calls report a missing path, yet the final reply claims
+complete cleanup. The audit identifies an omitted execution pattern, not an independently
+verified final filesystem state or a fully repaired summary.
+The archived native excerpt is a generic filesystem finding, not a diagnosis
+of this specific trajectory. The complete-report case audit judges the
+prefix-only mechanism missing under both raters; the excerpt alone does not
+establish absence. Its verbatim text and report fingerprint are retained in
+\texttt{bfcl\_prefix\_report\_excerpt.json} beside the local case and audit.
+The separate ACE R9 record audit uses the frozen 4B results: 48 planned tasks, 38 trained
+tasks, 304 episodes, five updates, zero recorded episode aborts, and 45.56\%
+public-eval score. The purchase-workflow revision's allocation is 10 planned,
+zero accepted, and unavailable, with no duplicates or batch-alignment drops.
+The case is a plan--exposure record audit, not an unlinked-feedback control;
+it neither attributes a score change to missing data nor rules out exposure
+to earlier versions. The aggregate scores and original cases are summarized in
+\texttt{data/evidence\_gaps\_20260918.json}; no new training or judging was
+performed for these illustrations.

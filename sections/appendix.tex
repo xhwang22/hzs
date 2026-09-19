@@ -24,7 +24,7 @@ Interface & Responsibility\\
 
 Task serialization binds the program-bank digest, request, payload, sampling parameters, and an initial signature covering state, public instructions, visible tools and user context. Repeated sampling with identical inputs must agree. Episode state is copied; expected tool rejection restores the previous state and records the result. These checks are consistency safeguards, not a proof that arbitrary Python or all unseen task instances are correct.
 
-\paragraph{Reward.}
+\textbf{Reward.}\quad
 A generated task returns a Boolean or programmatic \code{Score}. With outcome components $c_k\in[0,1]$, mandatory guards $g_\ell\in\{0,1\}$ and positive pre-fixed weights $w_k$,
 \begin{equation}
 R_x(\tau)=\left(\prod_\ell g_\ell\right)
@@ -36,13 +36,38 @@ R_x(\tau)=\left(\prod_\ell g_\ell\right)
 \end{equation}
 The broader framework contains optional semantic-rubric support, but the studied task-generation contract excludes it. Model-backed users and independent solvability reviewers remain distinct from programmatic training rewards. Official target graders retain their own scoring logic.
 
-\paragraph{Bounded checks.}
-Changed programs undergo CPU execution checks and a model review of up to three representative constructed instances (first, middle, last), not an exhaustive semantic audit. At most one code repair is permitted. Retention can reuse the accepted review when code and sampler parameters match; all new tasks still receive executable checks. Promotion checks that request, payload, initial signature and sampling semantics remain unchanged. Failed candidates and exact duplicates produce explicit shortfalls, with no unplanned backfill.
+\phantomsection
+\textbf{Construction and refinement in the maintained framework.}\quad
+\label{app:constructionrefinement}
+The environment, task, and verifier are logical components that can share
+one program. Each environment has a persistent Env Builder session and
+workspace, receiving the researcher's specification, sampling settings,
+generic examples, and prior implementation/review history. Different
+environments can be built concurrently; revisions to the same environment
+are serialized. Review covers the full candidate batch and previous findings.
+An unchanged resubmission reuses its verdict rather than resampling the
+reviewer; any edit requires renewed review.
+
+Construction obeys task-count and time budgets. Training starts only when
+the accepted-set requirement is met: full-target settings require $N$ task
+instances, whereas minimum-acceptance settings allow
+$N_{\min}\leq |D_t|\leq N$, without admitting unchecked triples. Already
+accepted instances retain their immutable versions during bounded replanning.
+There is no separate teacher-solution requirement, pre-training student probe,
+or reward-variation admission gate. These controls support implementation,
+not a separate methodology contribution; the historical protocol below
+allowed smaller positive batches.
+
+\textbf{Checks in the reported cohort.}\quad
+In the earlier protocol underlying the results, changed programs undergo CPU execution checks and a model review of up to three representative constructed instances (first, middle, last), not an exhaustive semantic audit. At most one code repair is permitted. Retention can reuse the accepted review when code and sampler parameters match; all new tasks still receive executable checks. Promotion checks that request, payload, initial signature and sampling semantics remain unchanged. Failed candidates and exact duplicates produce explicit shortfalls, with no unplanned backfill; positive smaller batches can enter training. These are historical study settings, not the current full-batch, persistent-builder review described in Section~\ref{sec:method}.
 
 \section{Study Versions and Evidence Boundaries}
 \label{app:versions}
 
 The earlier manuscript described World--Scene interfaces, curated World initialization and a separate student probe. Those describe a superseded protocol, not the results reported here. The three selected runs use \code{persistent\_environment\_v5}; their initial Git trees contain only an empty-bank seed manifest under \code{env/}. Generic interface examples remain provided.
+
+\textbf{Maintained framework versus measured studies.}\quad
+The 16 September revision separates Researcher-owned interpretation from persistent Env Builders, one per environment, which receive specifications and examples rather than raw public-eval or RL evidence. It adds full-batch independent review for target alignment and behavior correctness, same-builder iterative repair, and immutable accepted-task retention across bounded replanning to meet a 96-task target before RL. Actual-exposure records distinguish intended, accepted, and completed training. These changes must not be attributed retrospectively to the earlier 4B curves. The BFCL, $\tau^2$, and ACE author cohorts launched on 16 September were stopped during their first construction/planning round with zero completed iterations and no formal RL; local construction and review checks do not establish benchmark gains. The earlier ACE decision-brief contract already records expected effects and previous-intervention review, whereas the earlier $\tau^2$/BFCL runs use their prior v5 contract.
 
 \begin{table}[ht]
 \centering\small
@@ -54,7 +79,7 @@ The earlier manuscript described World--Scene interfaces, curated World initiali
 Run suffix & \code{83b860} & \code{defa84} & \code{22571a}\\
 Launch (Beijing time) & Sep.\ 13, 02:25 & Sep.\ 13, 02:25 & Sep.\ 14, 09:46\\
 Snapshot rounds & 9, stopped & 9, stopped & 10, stopped\\
-Test checkpoints & R1--R9 & R1--R9 & R1--R10\\
+Private-eval checkpoints & R1--R9 & R1--R9 & R1--R10\\
 Task bank at start & Empty & Empty & Empty\\
 Expectation/review contract & Earlier v5 & Earlier v5 & Decision brief v1\\
 RL feedback access & Earlier diagnostic views & Earlier diagnostic views & Full group queries\\
@@ -64,36 +89,93 @@ Recorded episode aborts & 2/6,768 & 33/6,472 & 0/5,008\\
 \end{tabularx}
 \end{table}
 
-The shared base model is Qwen3-4B-Instruct-2507, with RL temperature 0.7, 65,536-token context, 16,384-token response cap, task-group size eight, learning rate $3\times10^{-6}$, and fixed-reference KL coefficient 0.005. The recorded optimizer seed is 1234. Up to eight Tasks form one update; smaller tails are kept. The controller task configuration limits interactions separately from benchmark evaluation. Program construction is CPU work; pod counts refer to leased GPU jobs, with four GPUs per pod.
+\textbf{Training and evaluation configuration.}\quad
+The shared base model is Qwen3-4B-Instruct-2507, trained with full-parameter online GRPO, RL temperature 0.7, 65,536-token context, 16,384-token response cap, task-group size eight, learning rate $3\times10^{-6}$, and fixed-reference KL coefficient 0.005. The recorded optimizer seed is 1234. Up to eight Tasks form one update; smaller tails are kept. Each round targets 96 Tasks, although construction failures and allocations can reduce the realized batch. The controller task configuration limits interactions separately from benchmark evaluation. Program construction is CPU work; pod counts refer to leased GPU jobs, with four GPUs per pod.
+
+Astra serves as the data researcher through Codex. Analysis, implementation,
+and screening use GPT-5.5, while model-backed users use GPT-5.4. Each study has
+one evolution/training seed and three evaluation repeats per checkpoint on
+each split; these repeats do not establish cross-seed reliability. We report
+task-weighted success for $\tau^2$ and BFCL and the two-category macro mean for
+ACE, not pass@3 or full-leaderboard scores. The three local studies begin with
+an empty environment bank, generic code examples, and no external grounding
+corpus. The retained records contain nine completed rounds each for $\tau^2$
+and BFCL and ten for ACE; incomplete or cancelled attempts add no curve points.
+The behavioral-coverage diagnostic is a separate offline study on frozen
+Qwen3-8B trajectories (Appendix~\ref{app:analysiscoverage}).
+
+\textbf{External baseline identity.}\quad
+The exported \texttt{Codex-Vanilla} $\tau^2$ and BFCL runs identify their researcher
+model as \code{gpt-6-astra} in both first- and last-round Codex event logs.
+Their student profile is \code{qwen3\_4b\_instruct}, a distinct model role.
+The corresponding ACE raw artifacts were not included in this export.
+Repository-example and fixed-environment controls are defined in the setup;
+their comparison results are not yet included in the current manuscript.
 
 Recorded complete rounds report weight changes, finite training metrics, complete policy-token capture and task-group reward normalization. This does not make their training data defect-free: aborted episodes remain part of the audit, and maintenance/restart history is retained. No cancelled attempt or archived alternative checkpoint is substituted into a completed-round curve. The final confirmatory study should rerun a frozen, matched protocol with independent seeds.
 
 Direct inspection of the retained rollout archives attributes 32 BFCL R2 aborts to an invalid model-backed user-context contract and one BFCL R1 abort to an empty user turn. The two $\tau^2$ aborts are a user-tool interaction-budget exhaustion in R3 and an empty user turn in R8. These are not ordinary failed task outcomes or evidence that a task was simply too difficult. They qualify the historical training studies even though their subsequent fixed-target evaluations completed.
 
+\subsection{Environment Implementation Case}
+\label{app:implementationaudit}
+
+Section~\ref{sec:implementationgap} uses the retained \code{retail\_exchange\_batch}
+candidate from the 16 September $\tau^2$ construction cohort. The original
+specification's success example requested different replacements for two
+identical mugs. The candidate's sampler selected a replacement solely from
+the product group, assigning the same preferred or fallback option to every
+occurrence in that group. All six inspected tasks used identical replacement
+targets for their repeated originals. The initial review had accepted the
+candidate; a subsequent contract audit confirmed the missing generator branch
+and a related verifier mismatch for distinct-target duplicates.
+
+The audit distinguishes generator support from batch coverage: a small batch
+need not exhibit every supported optional variation. Here, source inspection
+established that the required variation could not be sampled. A later repaired
+copy supported distinct targets, but does not change the original candidate
+or provide a downstream RL measurement. The cohort stopped before formal
+training. A local case record retains the specification example, source-code
+excerpt, historical review findings, observed batch counts, and source hashes;
+paper preparation only read those records and performed no new environment
+execution or model review.
+
 \subsection{Benchmark Protocols}
 
-\paragraph{$\tau^2$-Bench.}
-Each half has 25 airline, 57 retail and 57 telecom tasks. The revised fixed-seed partition stratifies airline/retail business-action labels and telecom issue/persona labels. Its baseline was repartitioned from existing real evaluations without resampling responses; some earlier test-side records required reconstruction of static tool/schema wrappers, which is disclosed in their provenance. Overall is task-weighted, not an unweighted mean of domains. The evaluation policy is greedy and the user is GPT-5.4 at temperature zero.
+\textbf{$\tau^2$-Bench.}\quad
+Each half has 25 airline, 57 retail and 57 telecom tasks. The revised fixed-seed partition stratifies airline/retail business-action labels and telecom issue/persona labels. Its baseline was repartitioned from existing real evaluations without resampling responses; some earlier private-eval-side records required reconstruction of static tool/schema wrappers, which is disclosed in their provenance. Overall is task-weighted, not an unweighted mean of domains. The evaluation policy is greedy and the user is GPT-5.4 at temperature zero.
 
-Checkpoint test evaluation uses a replay repair that preserves the live behavior of unknown/rejected tools instead of allowing an exception to abort final-state reconstruction. Accepted test records use the corrected judge configuration and replay-v2 lineage; failed and superseded v1 evaluations are excluded. The historical test baseline predates the replay repair and is explicitly marked non-comparable in the dashboard registry. Figure~\ref{fig:evolution} connects it for visual continuity and shows the stored-score difference; this is not a matched-protocol gain. Table~\ref{tab:main} omits its gain estimate and paired interval.
+Evaluation of each checkpoint on the private eval set uses a replay repair that preserves the live behavior of unknown/rejected tools instead of allowing an exception to abort final-state reconstruction. Accepted private-eval records use the corrected judge configuration and replay-v2 lineage; failed and superseded v1 evaluations are excluded. The historical private-eval baseline predates the replay repair and is explicitly marked non-comparable in the dashboard registry. Figure~\ref{fig:evolution} connects it for visual continuity and shows the stored-score difference; this is not a matched-protocol gain. We therefore do not report a matched-protocol gain estimate or paired interval for this benchmark.
 
-\paragraph{BFCL.}
-The fixed dev/test halves contain 100 tasks each from Base, Long Context, Missing Function and Missing Parameter. Legacy framework identifiers such as \code{bfcl\_v3} are adapter names, not evidence that a full leaderboard suite was evaluated. The matched test base comes from the recorded September 6 collection with the same task membership, model, repeats and evaluation/serving configuration. The paper reports only these four multi-turn subsets.
+\textbf{BFCL.}\quad
+The fixed public/private eval halves contain 100 tasks each from Base, Long Context, Missing Function and Missing Parameter. Legacy framework identifiers such as \code{bfcl\_v3} are adapter names, not evidence that a full leaderboard suite was evaluated. The matched private-eval base comes from the recorded September 6 collection with the same task membership, model, repeats and evaluation/serving configuration. The paper reports only these four multi-turn subsets.
 
-\paragraph{ACEBench-Agent.}
-The English Agent release is pinned to official source revision \code{56dd66c}. Its 20 multi-step and 30 multi-turn tasks are split by category and tool-class strata into equal dev/test halves (10+15 each), with seed 1234. We report the unweighted mean of the two category scores, matching the metric definition used in SPADE, not its complete evaluation protocol.
+\textbf{ACEBench-Agent.}\quad
+The English Agent release is pinned to official source revision \code{56dd66c}. Its 20 multi-step and 30 multi-turn tasks are split by category and tool-class strata into equal public/private eval halves (10+15 each), with seed 1234. We report the unweighted mean of the two category scores, matching the metric definition used in SPADE, not its complete evaluation protocol.
 
 The studied run uses \code{acebench\_native\_fc\_v1}: native structured tool calls and full append-only assistant/tool history, with the native business tools, task initialization, GPT-5.4 user, 40-event budget and official end-state grading. The audited schema projection corrects the documented required-field typo for \code{reserve\_flight}; malformed arguments are not repaired to make episodes succeed. The 4B policy uses temperature 0.001 and a 1,000-token output budget. Multi-step outer prompts retain the wrapper's Chinese compatibility setting while tasks/tools remain English; multi-turn prompts are English. These transport, history, user-model and serving details preclude presenting the scores as an exact SPADE reproduction.
 
-The older September 13 ACE textual-interface study is not spliced into the native-FC curve. Its archived alternate training attempt is also excluded. Native test measurements cover all ten completed checkpoints. The later sweep reuses R1--R4 results and adds R5--R10 on the same 25 test tasks with three repeats and the same native-FC protocol. R6/R8 initially failed during remote toolchain detection before inference; the completed recovery results are included and the failed-start records are retained in provenance. Training was stopped during R11, which has no registered complete checkpoint and is excluded.
+The older September 13 ACE textual-interface study is not spliced into the native-FC curve. Its archived alternate training attempt is also excluded. Native private-eval measurements cover all ten completed checkpoints. The later sweep reuses R1--R4 results and adds R5--R10 on the same 25 private-eval tasks with three repeats and the same native-FC protocol. R6/R8 initially failed during remote toolchain detection before inference; the completed recovery results are included and the failed-start records are retained in provenance. Training was stopped during R11, which has no registered complete checkpoint and is excluded.
 
 \subsection{Snapshot and Statistical Construction}
 
-The original snapshot at 14 September 2026, 16:04:42 UTC remains unchanged. A supplementary snapshot at 17:43:25 UTC (15 September 01:43:25 Beijing time) adds ACE R5--R10 test results and R10 development/training records. It retains the other two studies exactly, yielding nine completed rounds each for $\tau^2$/BFCL and ten for ACE. All included checkpoints have test results. Rebuilding the paper does not query or update source experiments.
+\textbf{Private results at public-selected checkpoints.}\quad
+BFCL selects R9, scoring 42.08\% versus 25.42\% for its matched base model
+($+16.67$ percentage points). ACEBench-Agent selects R3, scoring 52.22\%
+versus 41.11\% ($+11.11$ points); its paired-task interval includes zero.
+ACE's higher private score of 56.11\% at R7 does not change selection, and
+its R10 score is 51.11\%. $\tau^2$ selects R5 with 39.33\% private success,
+falling to 34.05\% at R9. Its historical 31.89\% private baseline predates
+the replay repair and does not support a matched-protocol gain.
+AppWorld selects R9 from public TGC, scoring 22.22\% on private Normal versus
+8.93\% at Base. The supplied AppWorld series is displayed through R10;
+evaluation repeats are unspecified. Figure~\ref{fig:evolution}'s vertical
+guides mark public-selected checkpoints.
 
-Each plotted evaluation was independently recounted from stored per-task three-repeat outcome groups and checked against saved summary metrics. The updated snapshot records 218 source-file hashes, the prior snapshot's hash, run/job/revision identities, actual task allocations, training audit fields, and links to baseline and operator-only test collections. The update checks that earlier ACE measurements and training records are unchanged; new test records match registered checkpoints and retain the fixed task membership. It contains outcome summaries, not a new evaluation. The paper scripts neither import generated environment modules nor invoke training, serving, grading or controller actions.
+The original snapshot at 14 September 2026, 16:04:42 UTC remains unchanged. A supplementary snapshot at 17:43:25 UTC (15 September 01:43:25 Beijing time) adds ACE R5--R10 private-eval results and R10 public-eval/training records. It retains the other two studies exactly, yielding nine completed rounds each for $\tau^2$/BFCL and ten for ACE. All included checkpoints have private-eval results. Rebuilding the paper does not query or update source experiments.
 
-Selection uses the earliest maximum dev mean over R0 and the included completed checkpoints, with numerical ties rounded to twelve decimal places. It is an explicitly applied analysis rule, not a claim of preregistration. For paired test differences, each bootstrap draw samples tasks with replacement within their fixed subset, retains all three repeats for each sampled task, and applies the original aggregation: task-weighted for BFCL and a two-category macro mean for ACE. We use 10,000 draws with bootstrap seed 20260914. The $\tau^2$ baseline mismatch excludes its paired baseline comparison.
+Each plotted evaluation was independently recounted from stored per-task three-repeat outcome groups and checked against saved summary metrics. The updated snapshot records 218 source-file hashes, the prior snapshot's hash, run/job/revision identities, actual task allocations, training audit fields, and links to baseline and operator-only private-eval collections. The update checks that earlier ACE measurements and training records are unchanged; new private-eval records match registered checkpoints and retain the fixed task membership. It contains outcome summaries, not a new evaluation. The paper scripts neither import generated environment modules nor invoke training, serving, grading or controller actions.
+
+Selection uses the earliest maximum public-eval mean over R0 and the included completed checkpoints, with numerical ties rounded to twelve decimal places. It is an explicitly applied analysis rule, not a claim of preregistration. For paired private-eval differences, each bootstrap draw samples tasks with replacement within their fixed subset, retains all three repeats for each sampled task, and applies the original aggregation: task-weighted for BFCL and a two-category macro mean for ACE. We use 10,000 draws with bootstrap seed 20260914. The $\tau^2$ baseline mismatch excludes its paired baseline comparison.
 
 \section{Within-Benchmark Evolution}
 \label{app:subsets}
@@ -101,7 +183,7 @@ Selection uses the earliest maximum dev mean over R0 and the included completed 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\linewidth]{figures/subsets.pdf}
-\caption{Fixed development-subset trajectories. These use the benchmark's fixed labels, not the Planner's changing analysis-domain names. BFCL's Missing Function subset improves substantially; the later $\tau^2$ decline is particularly visible in Telecom. Native ACE's early gain is concentrated in Multi-Step. The figure describes associations within the recorded runs, not attribution to a particular environment revision.}
+\caption{Fixed public-eval-subset trajectories. These use the benchmark's fixed labels, not the data researcher's changing analysis-domain names. BFCL's Missing Function subset improves substantially; the later $\tau^2$ decline is particularly visible in Telecom. Native ACE's early gain is concentrated in Multi-Step. The figure describes associations within the recorded runs, not attribution to a particular environment revision.}
 \label{fig:subsets}
 \end{figure}
 
@@ -125,4 +207,8 @@ Whole-program generation without persistence & Does retaining and revising asset
 \end{tabularx}
 \end{table}
 
-Controls should share model initialization, target-information access and evaluation protocols. Compare both matched training episodes and matched total research budgets; count failed implementations, reviewer requests and all serving/evaluation overhead. Additional evidence should include independently audited accepted and rejected tasks, one traced intervention from source case to code change and subsequent outcomes, and repeated evolution seeds. Independent test tasks reserved after method freeze are needed for a final confirmatory result.
+Controls should share model initialization, target-information access and evaluation protocols. Compare both matched training episodes and matched total research budgets; count failed implementations, reviewer requests and all serving/evaluation overhead. Additional evidence should include independently audited accepted and rejected tasks, one traced intervention from source case to code change and subsequent outcomes, and repeated evolution seeds. Independent private-eval tasks reserved after method freeze are needed for a final confirmatory result.
+
+\input{sections/analysis_coverage_appendix}
+
+\input{sections/discussion}

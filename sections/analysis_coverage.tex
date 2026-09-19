@@ -1,0 +1,39 @@
+\subsection{Behavioral Coverage and Report Compactness}
+\label{sec:analysiscoverage}
+
+We now test whether a structured analysis process reduces the information loss
+identified in Section~\ref{sec:coveragegap}. On the same 1,692 frozen initial
+Qwen3-8B public-eval trajectories, we compare the fixed coding-agent reports
+(Astra/high) with a standalone, coverage-checked refinement of the behavioral
+map (GPT-5.5/high). The refinement analyzes complete task evidence, consolidates
+shared mechanisms, and checks the compact report for omitted conditions. It
+receives neither the reference labels nor the coding agent's report prose.
+
+\textbf{Measure retained meaning, not compression alone.}\quad
+Frozen, source-grounded reference units describe task requirements and failure
+mechanisms. An LLM judge scores anonymized report pairs as full, partial,
+missing, or contradicted. Only full preservation of the mechanism and its
+consequential scope or dependency receives credit. We average units within
+each task and then tasks within each corpus; word count separately measures
+compactness. References are generated before seeing candidate reports, not
+inferred from either method's preferred categories. Appendix~\ref{app:analysiscoverage}
+gives the protocol, grading variability, costs, and spot audit.
+
+\input{figures/analysis_coverage_float}
+
+\textbf{Higher coverage in shorter reports.}\quad
+The refined map reaches 88.1--98.2\% task-requirement coverage and 71.3--88.4\%
+failure-mechanism coverage, while using 12--29\% fewer words
+(Figure~\ref{fig:analysiscoverage}). It exceeds both the paired and original
+grades of the unchanged coding-agent reports on all three corpora; the ordering
+also holds under subset--family-balanced aggregation. A concrete ACE example
+shows why this is more than naming more error types: an inbox-cleanup timeout
+label omits the user-authorization--deletion--retry dependency, which the
+refined report preserves. Both graders support partial versus full coverage
+for that example. Not every case improves; partially preserved mechanisms and
+other collapsed distinctions are documented in Appendix~\ref{app:analysiscoverage}.
+
+These development-set results support more comprehensive, compact behavioral
+analysis in this setting. They do not isolate the hierarchy from the added
+coverage checks, match backbones or computation, or establish downstream RL
+gains. The diagnostic is separate from the historical 4B training runs.

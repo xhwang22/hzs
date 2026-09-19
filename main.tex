@@ -4,40 +4,47 @@
 \usepackage{amsmath,amssymb,mathtools}
 \usepackage{graphicx,booktabs,array,tabularx}
 \usepackage{xcolor}
-\usepackage{algorithm,algpseudocode}
 \usepackage{microtype}
+\usepackage{placeins}
 \usepackage{hyperref}
 \usepackage{url}
-\hypersetup{colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black,
+  pdfpagelayout=OneColumn,
+  pdfpagemode=UseNone,
+  pdfstartview=FitH
+}
 
-\newcommand{\method}{\textsc{EnvOpt}}
+\newcommand{\method}{\texttt{EnvOpt}}
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\ind}{\mathbf{1}}
 \newcommand{\todo}[1]{\textcolor{red!65!black}{[TODO: #1]}}
 \newcommand{\pending}{\textcolor{gray}{---}}
 \newcommand{\code}[1]{\texttt{#1}}
 
-\title{EnvOpt: Persistent Environment Evolution\\from Agent Feedback}
+\title{Seeing the Patterns, Closing the Loop:\\Evolving Environments for Agent Training}
 \author{Anonymous authors}
 % Keep \iclrfinalcopy disabled for anonymous review.
 
 \begin{document}
 \maketitle
 \begin{abstract}
-Data-centric self-improvement requires turning evidence about a model's limitations into useful training experience. We study tool-using agents when target interaction traces are available but the target environment implementation is not. We present \method{}, which starts from an empty task-environment bank and maintains a persistent library of executable training programs. A fixed Planner combines source-linked trajectory analysis, measured task-linked requirement groups, versioned online rewards and maintained research experience to create, revise, retain or pause environments. Each program jointly defines task sampling, interaction and verification; bounded implementation checks precede fresh online RL without a separate student probe. Updated target behavior informs subsequent research. In preliminary single-seed Qwen3-4B studies, development-selected checkpoints score 42.08\% on BFCL multi-turn test versus a matched 25.42\% base, and 52.22\% on native-tool-calling ACEBench-Agent versus 41.11\%. The latter estimate has substantial small-test-set uncertainty. On $\tau^2$, the selected checkpoint reaches 39.33\% test success but the last declines to 34.05\%. These protocol-qualified trajectories demonstrate useful checkpoints alongside regressions; controlled comparisons are still needed to establish the contribution of persistent environment evolution.
+LLM agents can serve as data researchers, automating the creation of training data for LLM post-training. We study data-centric recursive self-improvement for agent post-training. In this setting, a researcher agent starts from an empty environment library and constructs environments for online RL without access to the target backend or verifier; evaluation of the updated model then supplies feedback for the next round. Our experiments and audits identify three challenges: incomplete behavioral analysis, disconnected data--training--evaluation feedback, and incomplete implementation of intended environment mechanisms. We introduce \method{}, which uses source-traceable hierarchical analysis to \emph{see the patterns} in agent behavior and target-conditioned context refinement to \emph{close the loop} between data, training, and evaluation. These two designs guide environment construction and revision, supported by specification-driven implementation and independent review. Preliminary experiments with an earlier implementation yield observed test gains of 16.67 and 11.11 percentage points on BFCL and ACEBench, respectively, although gains vary across rounds. These findings suggest that evidence-guided environment evolution is a promising direction for automated agent post-training.
 \end{abstract}
 
 \input{sections/introduction}
 \input{sections/related_work}
+\input{sections/evidence_gaps}
 \input{sections/method}
 \input{sections/experiments}
-\input{sections/discussion}
+\input{sections/conclusion}
 
 \section*{AI use statement}
-Generative AI assisted source-code and literature analysis, methodological formulation, drafting, and figure preparation. The research system uses language models for trajectory analysis, planning, program synthesis, solvability review and user simulation; generated-task rewards in the studied cohort are programmatic. Existing experiment records were read to prepare this draft; no new training or benchmark evaluation was run during manuscript preparation. \todo{The authors must verify this statement against the complete research history and review all AI-assisted claims and artifacts before submission.}
+Generative AI assisted source-code and literature analysis, methodological formulation, drafting, and figure preparation. The research system uses language models for trajectory analysis, planning, program synthesis, solvability review and user simulation; generated-task rewards in the studied cohort are programmatic. Training results use existing experiment records. The offline diagnostic additionally generated and graded analysis reports from frozen public-evaluation trajectories; it did not rerun benchmark tasks or training. \todo{The authors must verify this statement against the complete research history and review all AI-assisted claims and artifacts before submission.}
 
 \section*{Reproducibility statement}
-The method interfaces, admission rule, and separation of development feedback from final evaluation are specified in Section~\ref{sec:method}. Appendix~\ref{app:protocol} records the experimental information needed for reproducibility. \todo{Add the frozen implementation revision, resolved run configurations, complete artifacts, and an anonymous code supplement after the experiments are finalized.}
+The research loop is specified in Section~\ref{sec:evidencegaps}, construction interfaces and admission rules in Section~\ref{sec:method}, and evaluation access in Section~\ref{sec:experiments}. Appendix~\ref{app:protocol} records the training-study information needed for reproducibility; Appendix~\ref{app:analysiscoverage} specifies the separate report-coverage diagnostic, whose frozen aggregate data and figure/table generator are included with the manuscript. \todo{Add the frozen implementation revision, resolved run configurations, complete artifacts, and an anonymous code supplement after the experiments are finalized.}
 
 \bibliography{references}
 \bibliographystyle{iclr2027_conference}

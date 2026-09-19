@@ -1,14 +1,46 @@
 \section{Related Work}
 \label{sec:related}
 
-\paragraph{Data-centric research for RSI.}
-RSIBench-Data evaluates a frontier researcher that revises training-data strategies for a separate target model under shared service and resource controls~\citep{rsibenchdata}. It supplies task-matched public seed repositories or examples; it does not prescribe a particular synthesis algorithm. Each candidate in its main setting uses LoRA SFT from a fixed base. \method{} studies a concrete executable-environment strategy, starting from an empty task-environment bank and continuing the student's online RL state. Both address the cross-model data-research component of RSI, not a claim that the student takes over or retrains the researcher. Autodata and DataMaster are further precedents for autonomous, downstream-feedback-driven data engineering~\citep{autodata,datamaster}.
+\textbf{Data-centric RSI.}\quad
+RSIBench-Data studies agents that revise training-data strategies for a
+separate target model under fixed training, evaluation, and resource
+controls~\citep{rsibenchdata}. Autodata develops an agentic data scientist
+that iterates between data creation and quality assessment, including
+meta-optimization of the data scientist itself~\citep{autodata}. DataMaster
+combines data discovery and transformation with tree search and cumulative
+memory while holding the learning algorithm fixed~\citep{datamaster}.
+\method{} studies this research role for executable training environments:
+a researcher starts with an empty environment library and uses
+behavioral evidence to guide successive rounds of environment revision and
+online RL. Its focus is the evidence supporting those research decisions.
 
-\paragraph{Executable environment synthesis.}
-AgentScaler, EnvScaler, ScaleEnv, Agent World Model, and EnvFactory establish programmatic tools, synthetic state, task generation, and generated verification as training infrastructure~\citep{agentscaler,envscaler,scaleenv,awm,envfactory}. FACET grounds task artifacts in a shared realized environment~\citep{facet}. We likewise bind requests and verification to concrete task data. Our emphasis is the persistent research process: complete environment programs retain identities and revisions, can be reused without code changes, and are reconsidered using target behavior and subsequent training feedback. Neither a database nor reusable task generation is claimed as a standalone invention.
+\textbf{Executable environment synthesis for tool-calling agents.}\quad
+AgentScaler, EnvScaler, and ScaleEnv automate the construction of executable
+tools, state, and verifiable tasks~\citep{agentscaler,envscaler,scaleenv}.
+Agent World Model scales database-backed synthetic environments for RL,
+while EnvFactory combines executable environment construction with
+topology-aware task synthesis~\citep{awm,envfactory}. FACET grounds task
+instructions, solutions, and verifiers in shared executable state to preserve
+source intent and cross-artifact consistency~\citep{facet}. The ACE framework
+and WRIT further examine data accuracy, learner-relative complexity,
+diversity, and the evidence required for individual tool-use
+decisions~\citep{ace,writ}. These works establish construction and validation
+principles that \method{} builds on; our emphasis is using source-traceable
+behavioral analysis and actual-training feedback to decide which mechanisms
+to construct or revise.
 
-\paragraph{Environment adaptation and self-play.}
-EnvHarness reshapes an existing executable environment through Stage, Contract, and Chain components while retaining the original verifier; EnvRigger diagnoses policy behavior to author adaptations~\citep{envharness}. Our researcher does not receive that target implementation and instead constructs independent training surrogates and their verifiers. This removes a reuse assumption but incurs additional modeling and verification risk. SPADE also generates complete stateful environments, including backend tool state, later user instructions, and state-based checks~\citep{spade}. Its designer and solver share a trained model, with corpus grounding, environment memory, and hint-based regret. \method{} uses a fixed external Planner, target-development traces, and explicit library-management decisions; the studied runs use no external grounding corpus. These are different information and optimization settings, not evidence of superiority over SPADE's reported scores.
-
-\paragraph{Curriculum and targeted synthesis.}
-Unsupervised environment design and replay prioritize learning opportunities using regret or related signals~\citep{paired,plr}. RODS uses online reward statistics to generate skill-aligned variants while preserving API dependency structure and managing a replay pool~\citep{rods}. Agent-World and AgentOmnia also adapt task coverage to diagnosed weaknesses~\citep{agentworld,agentomnia}. \method{} additionally permits program-level changes to interaction and outcome semantics, while preserving interpretable target-task associations. Its reward-group statistics come from formal training, not an additional student admission test or a new gradient estimator. The Accuracy--Complexity--diversity framework and WRIT help explain why correctness, coverage, and relevant decision burden should be considered jointly~\citep{ace,writ}.
+\textbf{Iterative RL and environment adaptation.}\quad
+PAIRED and Prioritized Level Replay adapt environment generation or selection
+using regret and learning-potential signals~\citep{paired,plr}. For tool-use
+agents, RODS uses online reward statistics to synthesize structurally aligned
+tasks and update a replay pool~\citep{rods}. EnvHarness adapts existing
+environments from policy trajectories while retaining their original
+verifiers~\citep{envharness}. SPADE trains a shared environment-designer and
+solver model through self-play, using hint-based regret, corpus grounding,
+and environment memory~\citep{spade}. Agent-World and AgentOmnia also use
+behavioral diagnosis to guide targeted task synthesis and
+self-evolution~\citep{agentworld,agentomnia}. \method{} uses an external
+researcher to revise independent environments without the target backend or
+verifier. It connects the source evidence behind a diagnosis to realized
+program versions, training tasks, RL observations, and fixed-target
+evaluation, supporting inspection of what each intervention actually delivered.

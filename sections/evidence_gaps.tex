@@ -1,0 +1,111 @@
+\section{Agents as Data Researchers: Identifying Challenges in Data-Centric RSI}
+\label{sec:evidencegaps}
+
+We instantiate data-centric RSI as an iterative environment-generation and
+reinforcement-learning loop. An agent serves as the data researcher,
+constructing executable environments and tasks in which a target model trains
+with online RL. Feedback from training and evaluation informs the next round.
+We first formalize this process, then examine challenges in its research
+context and generated training instances.
+
+\textbf{Formalizing the data-research loop.}\quad
+A \emph{research context} is the information available to an agent for
+research decisions, encompassing the research history, current state, and
+other decision-relevant information. Let $C_t$ denote this context at round
+$t$ and $\operatorname{DataResearcher}$ the agent that uses it to construct
+training instances. Each instance is a triple $(e,x,v)$, consisting of an
+executable environment $e$, a task $x$ specifying a goal and initial
+conditions, and a verifier $v$ assessing task completion. The agent's output
+is a set $D_t$ of $n_t$ such instances:
+% Keep these three displays readable even after short lead-in lines.
+% This local spacing does not change the conference style or other equations.
+\begingroup
+\setlength{\abovedisplayskip}{8pt plus 2pt}
+\setlength{\belowdisplayskip}{8pt plus 2pt}
+\setlength{\abovedisplayshortskip}{8pt plus 2pt}
+\setlength{\belowdisplayshortskip}{8pt plus 2pt}
+\begin{equation}
+\label{eq:researchoutput}
+D_t=\{(e_j,x_j,v_j)\}_{j=1}^{n_t}
+   =\operatorname{DataResearcher}(C_t).
+\end{equation}
+The set $D_t$ is then submitted for training and evaluation. Let $\pi_t$
+denote the target model at the start of round $t$ and
+$\operatorname{TrainEval}$ the fixed online-RL and public-evaluation
+procedure. It returns the updated model $\pi_{t+1}$ and feedback $F_t$
+comprising training records and evaluation results:
+\begin{equation}
+\label{eq:researchloop}
+(\pi_{t+1},F_t)
+= \operatorname{TrainEval}(\pi_t,D_t).
+\end{equation}
+Finally, $\operatorname{UpdateContext}$ integrates the submitted set and its
+feedback with the prior research context to guide the next round:
+\begin{equation}
+\label{eq:contextupdate}
+C_{t+1}=\operatorname{UpdateContext}(C_t,D_t,F_t).
+\end{equation}
+\endgroup
+
+In this setting, the loop starts from an empty environment library. Guided
+by feedback and the evolving research context, the data researcher repeatedly
+creates new environments or revises existing ones, with the goal of improving
+the target model over successive training rounds.
+
+\subsection{Incomplete Behavioral Analysis}
+\label{sec:coveragegap}
+
+The research context must preserve task requirements and model behavior
+to support training-target selection. To examine what survives this
+analysis, we give an analyst agent (Astra/high) complete access to the
+initial public-eval trajectories of Qwen3-8B reasoning: 1,200 BFCL, 417
+$\tau^2$, and 75 ACEBench-Agent trajectories. The instruction requests an
+analysis and specifies report fields, while leaving the reading strategy to
+the agent. We measure report coverage of source-grounded task requirements and
+failure mechanisms, crediting full preservation of their consequential
+conditions and dependencies (Section~\ref{sec:analysiscoverage}).
+
+Figure~\ref{fig:evidencegaps} shows the resulting gap: task-requirement coverage
+is 61.5--82.5\%, while failure-mechanism coverage ranges from only 39.4\% on
+BFCL to 67.5\% on ACE. These automatic, task-averaged scores use the same final
+paired evaluation as Section~\ref{sec:analysiscoverage}; the remainder includes
+both partial descriptions and wholly missing mechanisms. Full-corpus access
+thus leaves substantial behavioral information incompletely represented.
+Coverage is lower on the larger corpora in this comparison, although benchmark
+composition and corpus size vary together, preventing a causal size claim.
+
+\input{figures/evidence_gaps_float}
+
+The research context therefore needs to preserve the mechanisms and conditions
+that matter for the next data decision, with evidence available for inspection.
+\FloatBarrier
+
+\subsection{Disconnected Data, Training, and Evaluation}
+\label{sec:feedbackgap}
+
+Updating the research context requires connecting intended training targets,
+tasks actually trained, and subsequent evaluation outcomes. In ACE R9, one
+revision contributed zero of its ten planned tasks. We further
+audited 28 iterations of the original 4B studies, measuring the fraction of
+trained tasks with nonconstant rewards across eight valid rollouts---the
+within-task contrast used by GRPO. The task-weighted rates were 74.5\%,
+41.9\%, and 37.2\% on $\tau^2$, BFCL, and ACE. These checks distinguish
+whether an intervention reached training and whether its rollouts supplied
+reward contrast, motivating explicit linkage to its intended target and
+evaluation outcomes.
+\todo{Insert Codex per-iteration results and the learning-signal comparison.}
+
+\subsection{Incomplete Environment Implementation}
+\label{sec:implementationgap}
+
+A retail-exchange environment required matching identical items to different
+replacements, yet all six inspected tasks assigned the same replacement to
+both items. Checking the generator against the specification confirmed that
+the required branch was absent (Appendix~\ref{app:implementationaudit}).
+This exposes a gap in constructing the output triples: a runnable instance
+need not realize the intended training mechanism. Auditing environment
+behavior, task requirements, and verifier scores tests whether the three
+components jointly deliver the training target.
+\todo{Cross-benchmark audit: 20 environments each on $\tau^2$, BFCL, and ACE;
+eight rollouts per environment; LLM judgments of target implementation,
+interaction, and verifier defects. Insert observed defect rates.}
