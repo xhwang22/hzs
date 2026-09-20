@@ -1,0 +1,29 @@
+\subsection{Training Signal across Evolution}
+\label{sec:analysissignal}
+
+We audit the saved RL reward groups from the original 4B experiments and
+\texttt{Codex-Vanilla}. A task provides within-group reward signal when its
+eight valid rollouts receive nonconstant rewards; we report the fraction of
+such tasks among complete, valid groups in each round
+(Figure~\ref{fig:researchdiagnostics}b). This measures the relative reward
+contrast used by GRPO, retaining partial-credit rewards and excluding
+incomplete groups rather than treating them as failures.
+
+\textbf{Training success can exhaust the learning signal.}\quad
+On $\tau^2$, every \texttt{Codex-Vanilla} task in R9 and R10 receives eight
+rewards of one, leaving no within-group reward contrast. On BFCL, only
+2 of 52 tasks retain reward variation in each of these rounds.
+In comparison, \method{} retains signal on 70.5\% of valid $\tau^2$ tasks
+and 35.5\% of BFCL tasks in its final recorded round, R9.
+These observations motivate linking generated tasks to their actual training
+outcomes so the researcher can detect reward saturation and refresh its
+targets. They do not isolate the causal effect of context refinement.
+
+\subsection{Environment Implementation Quality}
+\label{sec:analysisenvironment}
+
+\todo{Audit 20 sampled environments per benchmark, with eight rollouts each,
+using an independent LLM judge to flag implementation, interaction, and verifier
+defects. Replace the illustrative values in Figure~\ref{fig:researchdiagnostics}c
+with measured environment-level audit pass rates (no defects flagged in the
+inspected rollouts).}

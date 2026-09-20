@@ -1,6 +1,8 @@
 \subsection{Behavioral Coverage and Report Compactness}
 \label{sec:analysiscoverage}
 
+\input{figures/analysis_coverage_float}
+
 We now test whether a structured analysis process reduces the information loss
 identified in Section~\ref{sec:coveragegap}. On the same 1,692 frozen initial
 Qwen3-8B public-eval trajectories, we compare the fixed coding-agent reports
@@ -8,6 +10,8 @@ Qwen3-8B public-eval trajectories, we compare the fixed coding-agent reports
 map (GPT-5.5/high). The refinement analyzes complete task evidence, consolidates
 shared mechanisms, and checks the compact report for omitted conditions. It
 receives neither the reference labels nor the coding agent's report prose.
+We extend the same protocol to 243 initial public-eval trajectories of
+Qwen3-4B-Instruct-2507 on AppWorld.
 
 \textbf{Measure retained meaning, not compression alone.}\quad
 Frozen, source-grounded reference units describe task requirements and failure
@@ -19,13 +23,11 @@ compactness. References are generated before seeing candidate reports, not
 inferred from either method's preferred categories. Appendix~\ref{app:analysiscoverage}
 gives the protocol, grading variability, costs, and spot audit.
 
-\input{figures/analysis_coverage_float}
-
 \textbf{Higher coverage in shorter reports.}\quad
-The refined map reaches 88.1--98.2\% task-requirement coverage and 71.3--88.4\%
+The refined map reaches 88.1--99.5\% task-requirement coverage and 71.3--88.4\%
 failure-mechanism coverage, while using 12--29\% fewer words
-(Figure~\ref{fig:analysiscoverage}). It exceeds both the paired and original
-grades of the unchanged coding-agent reports on all three corpora; the ordering
+(Figure~\ref{fig:analysiscoverage}a). It exceeds the paired
+grades of the coding-agent reports on all four corpora; the ordering
 also holds under subset--family-balanced aggregation. A concrete ACE example
 shows why this is more than naming more error types: an inbox-cleanup timeout
 label omits the user-authorization--deletion--retry dependency, which the

@@ -65,7 +65,7 @@ the agent. We measure report coverage of source-grounded task requirements and
 failure mechanisms, crediting full preservation of their consequential
 conditions and dependencies (Section~\ref{sec:analysiscoverage}).
 
-Figure~\ref{fig:evidencegaps} shows the resulting gap: task-requirement coverage
+The analysis reveals a substantial gap: task-requirement coverage
 is 61.5--82.5\%, while failure-mechanism coverage ranges from only 39.4\% on
 BFCL to 67.5\% on ACE. These automatic, task-averaged scores use the same final
 paired evaluation as Section~\ref{sec:analysiscoverage}; the remainder includes
@@ -74,11 +74,8 @@ thus leaves substantial behavioral information incompletely represented.
 Coverage is lower on the larger corpora in this comparison, although benchmark
 composition and corpus size vary together, preventing a causal size claim.
 
-\input{figures/evidence_gaps_float}
-
 The research context therefore needs to preserve the mechanisms and conditions
 that matter for the next data decision, with evidence available for inspection.
-\FloatBarrier
 
 \subsection{Disconnected Data, Training, and Evaluation}
 \label{sec:feedbackgap}
@@ -88,12 +85,14 @@ tasks actually trained, and subsequent evaluation outcomes. In ACE R9, one
 revision contributed zero of its ten planned tasks. We further
 audited 28 iterations of the original 4B studies, measuring the fraction of
 trained tasks with nonconstant rewards across eight valid rollouts---the
-within-task contrast used by GRPO. The task-weighted rates were 74.5\%,
-41.9\%, and 37.2\% on $\tau^2$, BFCL, and ACE. These checks distinguish
+within-task contrast used by GRPO. Among complete, valid groups, the
+task-weighted rates were 74.6\%, 42.2\%, and 37.2\% on $\tau^2$, BFCL,
+and ACE. These checks distinguish
 whether an intervention reached training and whether its rollouts supplied
 reward contrast, motivating explicit linkage to its intended target and
 evaluation outcomes.
-\todo{Insert Codex per-iteration results and the learning-signal comparison.}
+Section~\ref{sec:analysissignal} compares the per-round signal with
+\texttt{Codex-Vanilla}.
 
 \subsection{Incomplete Environment Implementation}
 \label{sec:implementationgap}

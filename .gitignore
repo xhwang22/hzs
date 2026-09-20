@@ -9,6 +9,11 @@
 !/main.tex
 !/references.bib
 
+# This small standard-library helper is a rendering/build dependency.
+!/tools/
+/tools/*
+!/tools/publish_pdf.py
+
 !/sections/
 /sections/*
 !/sections/*.tex
@@ -20,6 +25,7 @@
 !/figures/framework.pdf
 !/figures/evolution.pdf
 !/figures/analysis_coverage.pdf
+!/figures/research_diagnostics.pdf
 !/figures/subsets.pdf
 !/figures/*_float.tex
 
@@ -28,6 +34,7 @@
 !/tables/analysis_scores.tex
 !/tables/analysis_families.tex
 !/tables/analysis_cost.tex
+!/tables/benchmark_results.tex
 
 !/vendor/
 /vendor/*

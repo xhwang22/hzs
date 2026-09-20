@@ -55,6 +55,13 @@ minimal task-and-schema instruction, a 60-minute ceiling, and ordinary coding
 and search tools. It can choose its own strategy and has no imposed report word
 limit. Its three saved reports are fixed for all candidate comparisons.
 
+An independent AppWorld extension applies the same final protocol to 81 public
+tasks with three repeats (243 trajectories) from Qwen3-4B-Instruct-2507.
+Task and failure coverage are 89.70\%/66.32\% for the native report and
+99.49\%/85.47\% for the refined map, aggregated over 80 and 79 eligible tasks,
+respectively. The reports contain 5,412 and 4,522 words.
+The three-benchmark historical comparisons below remain unchanged.
+
 The refined-map generator uses \texttt{gpt-5.5}/high, complete public task
 evidence and its own intermediate records. It receives neither reference labels
 nor the agent report's prose; only the latter's word count sets a soft 85\%
@@ -165,8 +172,8 @@ the independent value of source lookup, or downstream RL improvement. The
 refinement is not retroactively attributed to the historical training runs.
 
 \textbf{Provenance of the motivating cases.}\quad
-Figure~\ref{fig:evidencegaps} reads the final native strict-coverage grades
-directly from the same frozen results as Figure~\ref{fig:analysiscoverage}.
+The coverage scores in Section~\ref{sec:coveragegap} use the final native
+strict-coverage grades from the same frozen results as Figure~\ref{fig:analysiscoverage}a.
 The archived BFCL case audit uses public trajectory
 \texttt{efefe1b89e2fb4e8382f9a5f0c230912}, preserved locally with the diagnostic
 sources. Six successful file-deletion calls target the first six entries of

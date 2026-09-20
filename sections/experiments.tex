@@ -29,7 +29,9 @@ are powered by GPT-6 Astra.
 \subsection{Main Results}
 \label{sec:mainresults}
 
-\suppressfloats[t] % Keep the results plot from floating above the setup.
+\suppressfloats[t] % Keep the results floats from floating above the setup.
+\input{tables/benchmark_results}
+
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{figures/evolution.pdf}
@@ -37,7 +39,7 @@ are powered by GPT-6 Astra.
 \label{fig:evolution}
 \end{figure}
 
-\textbf{Limited sustained gains with a strong research agent.}\quad
+\textbf{Strong coding agents struggle with continual data evolution.}\quad
 Despite pairing GPT-6 Astra with the Codex harness, \texttt{Codex-Vanilla}
 shows early gains followed by saturation or regression
 (Figure~\ref{fig:evolution}). On BFCL, public performance peaks at 30.00\%
@@ -59,11 +61,12 @@ use the earliest public maximum within the displayed rounds. The contrast is
 clearest on BFCL: \method{} reaches 45.00\% in R9, well beyond
 \texttt{Codex-Vanilla}'s 30.00\% peak in R3. On both benchmarks with baseline
 curves, \method{} maintains higher scores throughout the shared R3--R9 rounds.
-Progress is not monotonic, particularly on $\tau^2$ after R5, but all four
-displayed endpoints remain above their starting scores. Private-evaluation
-results are reported in Appendix~\ref{app:versions}.
+All four displayed endpoints remain above their starting scores.
+Table~\ref{tab:mainresults} reports test performance at the validation-selected
+checkpoints.
 
 \input{sections/analysis_coverage}
+\input{sections/analysis_signal}
 
 \subsection{Remaining Controls and Uncertainty}
 

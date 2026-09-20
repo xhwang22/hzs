@@ -1,0 +1,38 @@
+\begin{table}[t]
+\centering
+\caption{Test performance (\%) at checkpoints selected on the public validation set. Dashes indicate unreported results.}
+\label{tab:mainresults}
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\setlength{\fboxsep}{1pt}
+\renewcommand{\arraystretch}{1.0}
+\setlength{\aboverulesep}{1.5pt}
+\setlength{\belowrulesep}{1.5pt}
+\definecolor{modelband}{HTML}{E7F6FD}
+\begin{tabular}{@{}m{.24\linewidth}@{}*{4}{>{\centering\arraybackslash}m{.19\linewidth}@{}}}
+\toprule
+\textbf{Method} & \textbf{$\tau^2$-Bench} & \textbf{BFCL-v4} &
+\textbf{ACEBench-Agent} & \textbf{AppWorld} \\
+\midrule
+\multicolumn{5}{@{}c@{}}{\colorbox{modelband}{\makebox[\dimexpr\linewidth-2\fboxsep\relax][c]{\strut\textit{\normalsize Qwen3-4B-Instruct-2507}}}} \\
+\addlinespace[1pt]
+\texttt{Base model}    & 31.89 & 25.42 & 41.11 & 8.93 \\
+\texttt{Codex-Vanilla} & \pending & \pending & \pending & \pending \\
+\texttt{Codex-E}       & \pending & \pending & \pending & \pending \\
+\texttt{Fixed-Env}     & \pending & \pending & \pending & \pending \\
+\midrule
+\method{}             & \textbf{39.33} & \textbf{42.08} & \textbf{52.22} & \textbf{22.22} \\
+\addlinespace[3pt]
+\multicolumn{5}{@{}c@{}}{\colorbox{modelband}{\makebox[\dimexpr\linewidth-2\fboxsep\relax][c]{\strut\textit{\normalsize Qwen3-8B (reasoning enabled)}}}} \\
+\addlinespace[1pt]
+\texttt{Base model}    & 28.54 & 44.42 & 43.89 & \pending \\
+\texttt{Codex-Vanilla} & \pending & \pending & \pending & \pending \\
+\texttt{Codex-E}       & \pending & \pending & \pending & \pending \\
+\texttt{Fixed-Env}     & \pending & \pending & \pending & \pending \\
+\midrule
+\method{}             & \pending & \pending & \pending & \pending \\
+\bottomrule
+\end{tabular}
+\endgroup
+\end{table}
