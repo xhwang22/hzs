@@ -14,8 +14,7 @@ construction and independent review produce the environment--task--verifier
 set $D_t$. The training-and-evaluation service remains fixed.
 
 The following describes the maintained framework and labels a standalone
-analysis refinement. Section~\ref{sec:experiments} and
-Appendix~\ref{app:versions} distinguish these from the earlier protocols
+analysis refinement. Section~\ref{sec:experiments} distinguishes these from the earlier protocols
 underlying the reported training curves.
 
 \input{figures/framework_float}
@@ -57,8 +56,7 @@ passage. These are model-based checks, not a semantic-completeness guarantee.
 
 The report retains the four fields \emph{domain, environment, task behavior,
 failure behavior}. It enters the research context $C_t$ with links back to
-original trajectories. Task-linked measurement and construction details are
-given in Appendix~\ref{app:analysisconstruction}. This coverage-checked variant
+original trajectories. This coverage-checked variant
 is evaluated offline in Section~\ref{sec:analysiscoverage}, separately from
 the earlier analysis used in the historical training runs.
 
@@ -119,5 +117,3 @@ remaining allocations, subject to construction budgets. The accepted set
 $D_t$ enters training once its admission requirement is met. This local
 construction cycle precedes the outer training and feedback loop; review
 remains fallible, not a proof of program correctness.
-Construction and acceptance details appear in
-Appendix~\ref{app:constructionrefinement}.

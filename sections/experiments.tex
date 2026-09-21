@@ -11,8 +11,6 @@ train split for public evaluation and test-normal split for private evaluation.
 Public evaluation informs environment evolution and checkpoint
 selection, while private evaluation is withheld from the evolution process and used
 for final performance comparisons. Target models train with GRPO~\citep{grpo}.
-Benchmark protocols, training configurations, and implementation versions are
-given in Appendix~\ref{app:versions}.
 
 \textbf{Implementation and baselines.}\quad
 Our target models are Qwen3-4B-Instruct-2507 and Qwen3-8B~\citep{qwen3}, with
@@ -31,13 +29,6 @@ are powered by GPT-6 Astra.
 
 \suppressfloats[t] % Keep the results floats from floating above the setup.
 \input{tables/benchmark_results}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{figures/evolution.pdf}
-\caption{Public- and private-evaluation performance across environment-evolution rounds on four benchmarks, with Codex public-evaluation curves on $\tau^2$ and BFCL.}
-\label{fig:evolution}
-\end{figure}
 
 \textbf{Strong coding agents struggle with continual data evolution.}\quad
 Despite pairing GPT-6 Astra with the Codex harness, \texttt{Codex-Vanilla}

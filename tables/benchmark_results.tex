@@ -1,6 +1,6 @@
 \begin{table}[t]
 \centering
-\caption{Test performance (\%) at checkpoints selected on the public validation set. Dashes indicate unreported results.}
+\caption{Test performance (\%) at checkpoints selected on the public validation set. Green values show $\Delta$ from None (pp); Avg. averages all four benchmarks. Indented rows enable only the named component: BM, traceable behavioral map; CR, target-conditioned context refinement; EC, iterative environment construction. Dashes indicate unreported results.}
 \label{tab:mainresults}
 \begingroup
 \small
@@ -10,28 +10,36 @@
 \setlength{\aboverulesep}{1.5pt}
 \setlength{\belowrulesep}{1.5pt}
 \definecolor{modelband}{HTML}{E7F6FD}
-\begin{tabular}{@{}m{.24\linewidth}@{}*{4}{>{\centering\arraybackslash}m{.19\linewidth}@{}}}
+\definecolor{tablegain}{HTML}{218C4E}
+\newcommand{\tabledelta}[2]{\mbox{#1\,{\scriptsize\textcolor{tablegain}{\textbf{#2}}}}}
+\begin{tabular}{@{}m{.20\linewidth}@{}|@{}>{\centering\arraybackslash}m{.16\linewidth}@{}>{\centering\arraybackslash}m{.165\linewidth}@{}>{\centering\arraybackslash}m{.185\linewidth}@{}>{\centering\arraybackslash}m{.16\linewidth}@{}|@{}>{\centering\arraybackslash}m{\dimexpr.13\linewidth-2\arrayrulewidth\relax}@{}}
 \toprule
 \textbf{Method} & \textbf{$\tau^2$-Bench} & \textbf{BFCL-v4} &
-\textbf{ACEBench-Agent} & \textbf{AppWorld} \\
+\textbf{ACEBench-Agent} & \textbf{AppWorld} & \textbf{Avg.} \\
 \midrule
-\multicolumn{5}{@{}c@{}}{\colorbox{modelband}{\makebox[\dimexpr\linewidth-2\fboxsep\relax][c]{\strut\textit{\normalsize Qwen3-4B-Instruct-2507}}}} \\
+\multicolumn{6}{@{}c@{}}{\colorbox{modelband}{\makebox[\dimexpr\linewidth-2\fboxsep\relax][c]{\strut\textit{\normalsize Qwen3-4B-Instruct-2507}}}} \\
 \addlinespace[1pt]
-\texttt{Base model}    & 31.89 & 25.42 & 41.11 & 8.93 \\
-\texttt{Codex-Vanilla} & \pending & \pending & \pending & \pending \\
-\texttt{Codex-E}       & \pending & \pending & \pending & \pending \\
-\texttt{Fixed-Env}     & \pending & \pending & \pending & \pending \\
+None & 31.89 & 25.42 & 41.11 & 8.93 & 26.84 \\
+\texttt{Codex-Vanilla} & \pending & \pending & \pending & \pending & \pending \\
+\texttt{Codex-E} & \pending & \pending & \pending & \pending & \pending \\
+\texttt{Fixed-Env} & \pending & \pending & \pending & \pending & \pending \\
 \midrule
-\method{}             & \textbf{39.33} & \textbf{42.08} & \textbf{52.22} & \textbf{22.22} \\
+\method{} & \tabledelta{\textbf{39.33}}{+7.43} & \tabledelta{\textbf{42.08}}{+16.67} & \tabledelta{\textbf{52.22}}{+11.11} & \tabledelta{\textbf{22.22}}{+13.29} & \tabledelta{\textbf{38.96}}{+12.13} \\
+\hspace{1em}$\hookrightarrow$\; BM-only & \pending & \pending & \pending & \pending & \pending \\
+\hspace{1em}$\hookrightarrow$\; CR-only & \pending & \pending & \pending & \pending & \pending \\
+\hspace{1em}$\hookrightarrow$\; EC-only & \pending & \pending & \pending & \pending & \pending \\
 \addlinespace[3pt]
-\multicolumn{5}{@{}c@{}}{\colorbox{modelband}{\makebox[\dimexpr\linewidth-2\fboxsep\relax][c]{\strut\textit{\normalsize Qwen3-8B (reasoning enabled)}}}} \\
+\multicolumn{6}{@{}c@{}}{\colorbox{modelband}{\makebox[\dimexpr\linewidth-2\fboxsep\relax][c]{\strut\textit{\normalsize Qwen3-8B (reasoning enabled)}}}} \\
 \addlinespace[1pt]
-\texttt{Base model}    & 28.54 & 44.42 & 43.89 & \pending \\
-\texttt{Codex-Vanilla} & \pending & \pending & \pending & \pending \\
-\texttt{Codex-E}       & \pending & \pending & \pending & \pending \\
-\texttt{Fixed-Env}     & \pending & \pending & \pending & \pending \\
+None & 28.54 & 44.42 & 43.89 & \pending & \pending \\
+\texttt{Codex-Vanilla} & \pending & \pending & \pending & \pending & \pending \\
+\texttt{Codex-E} & \pending & \pending & \pending & \pending & \pending \\
+\texttt{Fixed-Env} & \pending & \pending & \pending & \pending & \pending \\
 \midrule
-\method{}             & \pending & \pending & \pending & \pending \\
+\method{} & \pending & \pending & \pending & \pending & \pending \\
+\hspace{1em}$\hookrightarrow$\; BM-only & \pending & \pending & \pending & \pending & \pending \\
+\hspace{1em}$\hookrightarrow$\; CR-only & \pending & \pending & \pending & \pending & \pending \\
+\hspace{1em}$\hookrightarrow$\; EC-only & \pending & \pending & \pending & \pending & \pending \\
 \bottomrule
 \end{tabular}
 \endgroup

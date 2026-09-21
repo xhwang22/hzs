@@ -144,7 +144,7 @@ execution or model review.
 \textbf{$\tau^2$-Bench.}\quad
 Each half has 25 airline, 57 retail and 57 telecom tasks. The revised fixed-seed partition stratifies airline/retail business-action labels and telecom issue/persona labels. Its baseline was repartitioned from existing real evaluations without resampling responses; some earlier private-eval-side records required reconstruction of static tool/schema wrappers, which is disclosed in their provenance. Overall is task-weighted, not an unweighted mean of domains. The evaluation policy is greedy and the user is GPT-5.4 at temperature zero.
 
-Evaluation of each checkpoint on the private eval set uses a replay repair that preserves the live behavior of unknown/rejected tools instead of allowing an exception to abort final-state reconstruction. Accepted private-eval records use the corrected judge configuration and replay-v2 lineage; failed and superseded v1 evaluations are excluded. The historical private-eval baseline predates the replay repair and is explicitly marked non-comparable in the dashboard registry. Figure~\ref{fig:evolution} connects it for visual continuity and shows the stored-score difference; this is not a matched-protocol gain. We therefore do not report a matched-protocol gain estimate or paired interval for this benchmark.
+Evaluation of each checkpoint on the private eval set uses a replay repair that preserves the live behavior of unknown/rejected tools instead of allowing an exception to abort final-state reconstruction. Accepted private-eval records use the corrected judge configuration and replay-v2 lineage; failed and superseded v1 evaluations are excluded. The historical private-eval baseline predates the replay repair and is explicitly marked non-comparable in the dashboard registry. Table~\ref{tab:mainresults} includes it for reference and reports the stored-score difference; this is not a matched-protocol gain. We therefore do not report a matched-protocol gain estimate or paired interval for this benchmark.
 
 \textbf{BFCL.}\quad
 The fixed public/private eval halves contain 100 tasks each from Base, Long Context, Missing Function and Missing Parameter. Legacy framework identifiers such as \code{bfcl\_v3} are adapter names, not evidence that a full leaderboard suite was evaluated. The matched private-eval base comes from the recorded September 6 collection with the same task membership, model, repeats and evaluation/serving configuration. The paper reports only these four multi-turn subsets.
@@ -168,8 +168,7 @@ falling to 34.05\% at R9. Its historical 31.89\% private baseline predates
 the replay repair and does not support a matched-protocol gain.
 AppWorld selects R9 from public TGC, scoring 22.22\% on private Normal versus
 8.93\% at Base. The supplied AppWorld series is displayed through R10;
-evaluation repeats are unspecified. Figure~\ref{fig:evolution}'s vertical
-guides mark public-selected checkpoints.
+evaluation repeats are unspecified.
 
 The original snapshot at 14 September 2026, 16:04:42 UTC remains unchanged. A supplementary snapshot at 17:43:25 UTC (15 September 01:43:25 Beijing time) adds ACE R5--R10 private-eval results and R10 public-eval/training records. It retains the other two studies exactly, yielding nine completed rounds each for $\tau^2$/BFCL and ten for ACE. All included checkpoints have private-eval results. Rebuilding the paper does not query or update source experiments.
 
