@@ -1,0 +1,136 @@
+% Imported for author review from envopt-0922-exp-results/paper/overleaf_source/sections/codex_vanilla_case_studies.tex.
+% Source SHA256: 42a6c5b150e688e9cee2477875b18c2daa6df1b4a2d7181ab2dbae486b409ce9
+% Changes from the archived source: protocol-scope notice and local run-in heading style only.
+\begingroup
+\color{blue}
+
+\section{Case Studies of \texttt{Codex-Vanilla} Limitations}
+\label{app:codexcases}
+
+This section makes the limitations in the main text concrete through saved public-evaluation trajectories, synthetic training rollouts, reward groups, and generated programs from the four completed Qwen3-4B \texttt{Codex-Vanilla} studies. The examples below are lightly abridged for readability; synthetic credentials and opaque identifiers are omitted. They are diagnostic examples rather than causal proofs: each study has one training seed, and a later benchmark failure cannot be attributed to one generated environment without a controlled intervention.
+
+\textbf{Protocol scope.}\quad The ACEBench-Agent cases and scores in this section use the historical textual-interface Codex run, not the later native-function-calling run. These archived public-evaluation and training diagnostics do not supply new private/Test measurements.
+
+\subsection{Case Study I: Improvement Was Discovered but Not Retained}
+
+\begin{table}[ht]
+\color{blue}
+\centering\small
+\caption{Public-evaluation trajectories. Every run discovers a checkpoint better than its final checkpoint. ``Drop'' is Final minus Peak.}
+\label{tab:codex_case_trajectory}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Benchmark & Base & Peak & Final (R10) & Drop \\
+\midrule
+$\tau^2$-Bench & 27.10 & 28.06 (R5) & 21.58 & $-6.47$ \\
+BFCL-v4 & 21.75 & 30.00 (R3) & 25.42 & $-4.58$ \\
+ACEBench-Agent & 10.56 & 22.22 (R7) & 11.67 & $-10.56$ \\
+AppWorld & 5.76 & 17.70 (R9) & 13.99 & $-3.70$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\color{blue}
+\centering\small
+\caption{Representative task-level regressions. Each comparison uses the same public-evaluation task and three repeats at both checkpoints.}
+\label{tab:codex_regression_cases}
+\begin{tabularx}{\linewidth}{@{}p{.18\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Benchmark and task & Earlier successful behavior & Later failed behavior \\
+\midrule
+\textbf{$\tau^2$}\newline Swap refund destinations across two orders & The agent tries the requested cross-order refund. The tool rejects it because refunds must use an eligible method. The agent makes no order mutation and transfers the case to a human. Result: 3/3 passes. & After the same rejection, the agent retries both returns using their original payment methods. The tools accept the returns, but the user's requested refund destinations are not satisfied and both orders are now changed. Result: 0/3 passes. \\
+\addlinespace
+\textbf{BFCL}\newline Trade at an observed stock price, then cancel & The agent reads the current price as 310.23, places the order at 310.23, verifies it, and cancels it. Result: 3/3 passes. & The agent requests the price but places the order at 350.50 instead of the returned value, then cancels the wrong-price order. Cancellation does not repair the incorrect earlier action. Result: 0/3 passes. \\
+\addlinespace
+\textbf{ACEBench-Agent}\newline Order one pizza and record spending & The agent logs in, places one 88-yuan order, creates one reminder, and terminates. Result: 3/3 passes. & The agent places the requested 88-yuan order, repeats the same order, then places two more orders containing two pizzas each for 156 yuan. After spending 488 of the 500-yuan balance, it repeatedly retries the now-impossible order and full reminder until the turn limit. Result: 0/3 passes. \\
+\addlinespace
+\textbf{AppWorld}\newline Refund one accidental 56-dollar payment & The agent identifies the approved request, sends exactly 56 dollars back once, and completes the task. Result: 3/3 passes. & A representative repeat tries negative and zero amounts, then successfully sends 56 dollars three separate times while pursuing unnecessary receipt and contact operations. The task terminates normally but the state contains 168 dollars of outgoing refunds. Result: 0/3 passes. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+These are not merely noisy score changes. The later policies lose different behavioral invariants: avoid an irreversible fallback that violates the user's constraint; bind an action to a newly observed value; stop after the requested side effect succeeds; and prevent duplicate financial actions. A data researcher that discovers a useful checkpoint but does not preserve these capabilities has not achieved sustained recursive improvement.
+
+\subsection{Case Study II: Aggregate Analysis Hid the Failure Mechanism}
+
+The ACE example exposes what is lost when a trajectory is compressed to ``failed by turn limit.'' The first tool batch already completed the requested pizza order and reminder. The subsequent interaction is the failure:
+
+\begin{table}[ht]
+\color{blue}
+\centering\small
+\caption{Abridged ACEBench-Agent trace from one failed final-checkpoint repeat.}
+\label{tab:ace_loop_trace}
+\begin{tabularx}{\linewidth}{@{}p{.09\linewidth}>{\raggedright\arraybackslash}p{.40\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Turn & Agent action & Environment result \\
+\midrule
+1 & Log in; inspect menu; order one Super Supreme Pizza; add spending reminder. & Order succeeds for 88 yuan; reminder succeeds. The requested external effects are already present. \\
+2 & Repeat login, menu lookup, the same pizza order, and the same reminder. & A second 88-yuan order succeeds; a duplicate reminder is added. \\
+3 & Order one Super Supreme and one Margherita pizza. & A third order succeeds for 156 yuan; 168 yuan remains. \\
+4 & Repeat the two-pizza order and reminder. & A fourth order succeeds for 156 yuan; 12 yuan remains and another reminder is added. \\
+5--20 & Repeat essentially the same two-pizza order and reminder batch. & The order fails for insufficient balance and the reminder fails because capacity is full; the same errors recur until the turn budget is exhausted. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The actionable mechanism is not generic ``multi-step difficulty.'' It is failure to recognize an already-satisfied goal, followed by duplicate irreversible actions and perseveration after stable errors. The other benchmarks show similarly specific mechanisms: the $\tau^2$ failure confuses a policy-mandated refusal with permission to perform a different mutation; the BFCL failure violates an observation-to-action dependency; and the AppWorld failure repeats a successful transfer while exploring irrelevant recovery paths. Aggregate labels such as retail, Base, turn limit, or completed do not preserve these distinctions.
+
+The researcher's own available evidence demonstrates the consequence. In late $\tau^2$ rounds, its retained summary contained domain rates and reward strata but no detailed RL failure trajectories. In late BFCL and ACE rounds, selected trajectories were excluded after integrity mismatches, leaving aggregate counts to drive allocation. AppWorld provides a before/after diagnostic: 144 permit-workflow episodes initially appeared only as constant low reward, so the researcher could not locate the failure. Once readable traces became available, one sampled task showed all eight attempts passing a human-readable roster alias as a canonical person identifier; this caused nine not-found errors, and the agent never attempted permit issuance. The next generated version added explicit alias-versus-ID guidance. This repair illustrates why the source behavior, rather than only its reward, must remain inspectable.
+
+\subsection{Case Study III: Training Reward Did Not Track Learning Value}
+
+\begin{table}[ht]
+\color{blue}
+\centering\small
+\caption{Reward-group composition over all ten rounds. A mixed group has nonzero reward variance across its eight valid rollouts and therefore supplies within-group contrast to GRPO. Constant partial groups have nonzero raw reward but zero normalized advantage.}
+\label{tab:codex_reward_groups}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+Benchmark & Groups & Mixed & Mixed (\%) & All 1 & All 0 & Const.\ partial \\
+\midrule
+$\tau^2$-Bench & 656 & 153 & 23.3 & 434 & 69 & 0 \\
+BFCL-v4 & 696 & 119 & 17.1 & 525 & 50 & 2 \\
+ACEBench-Agent & 960 & 203 & 21.1 & 536 & 182 & 39 \\
+AppWorld & 493 & 117 & 23.7 & 156 & 47 & 173 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\color{blue}
+\centering\small
+\caption{Late-round contradictions between synthetic training outcomes and public evaluation.}
+\label{tab:codex_signal_cases}
+\begin{tabularx}{\linewidth}{@{}p{.14\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Benchmark & Synthetic training observation & What the benchmark showed \\
+\midrule
+$\tau^2$ & The final two rounds contain 80 task groups and 640 rollouts; every reward is 1.0, so every normalized advantage is zero. & Public success declines from 23.26\% to 22.78\% and then 21.58\%. Perfect synthetic completion neither provides a learning gradient nor certifies retained benchmark capability. \\
+\addlinespace
+BFCL & Only 2 of 52 groups are mixed in each of the final two rounds. Synthetic strict success is 99.04\% and 96.63\%. & Public success declines from 28.58\% to 26.33\% and then 25.42\%. The researcher continues reallocating among nearly saturated synthetic families while benchmark behavior worsens. \\
+\addlinespace
+ACEBench-Agent & A closeout-aware round labels every Step episode as a strict failure unless the final assistant message contains a completion marker. Post-hoc state inspection finds 136 episodes with completed business outcomes but no marker. & The reward conflates doing the task with emitting protocol-specific text. It under-reports useful business behavior and changes subsequent allocation as if those objectives had zero success. \\
+\addlinespace
+AppWorld & Four permit-workflow groups receive exactly 0.2 in all 32 rollouts. The 0.2 is initial-state attestation credit; one inspected task contains eight attempts with no tool call. & Nonzero mean reward looks like partial progress but supplies no within-group gradient and can occur without any action. Twelve of 28 final-round groups are constant partial. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+These cases separate three quantities that the loop must not conflate: raw reward, relative learning signal, and transfer to the target benchmark. High reward can be saturated; nonzero reward can be preloaded; and low strict reward can be caused by a verifier convention rather than missing business competence. Without task-to-rollout-to-evaluation linkage, the researcher cannot reliably decide whether to retain, revise, or retire an environment.
+
+\FloatBarrier
+
+\subsection{Case Study IV: Executable Environments Implemented the Wrong or Easier Mechanism}
+
+\textbf{ACEBench-Agent: a textual marker became part of task success.}\quad The intended target was to reduce looping after successful tool use. The generated Step environments instead assigned 80\% of reward to the business state and the final 20\% to a separate assistant response containing \code{finish conversation}. A completed tool workflow without that phrase received 0.8 and strict failure. Across one round, 14 supply, 49 cabinet, and 73 survey episodes completed their business outcomes without the marker, while no Step episode produced a successful closeout. The next revision removed this requirement for new tasks and restored outcome-only success. This is a concrete reward-definition mismatch: the environment was executable and internally consistent, but it trained a protocol phrase jointly with the intended behavior.
+
+\textbf{BFCL: private information leaked before the agent earned it.}\quad A parcel environment was supposed to reveal a private pickup window only through a user follow-up after an assistant message. A direct audit called the user callback with an empty history and received the equivalent of ``Use pickup on October 7 in the morning.'' The same audit found successful quote and dispatch operations recorded with rollback metadata even though state changes persisted. Both issues were repaired. The example shows why running the program and checking a successful endpoint is insufficient: interaction timing and trace semantics are part of the training mechanism.
+
+\textbf{AppWorld: identifiers encoded the answer.}\quad In the initial specimen generator, semantic roles were tied to fixed ID suffixes. Across tasks, ready target specimens occupied suffixes such as 7 and 18, the held distractor used 40, the archived distractor used 29, and the out-of-campaign specimen used 51. Compatible protocols used suffixes 0 and 1 while the incompatible protocol used 2; open destinations similarly used 0 and 1 while the closed destination used 2. Row order was shuffled, but a policy could still solve selection by suffix rather than inspecting status, campaign, compatibility, temperature, and destination fields. Independent review caught the shortcut, and the next generator randomized opaque IDs and role placement. The original tasks were valid programs, yet they instantiated a shortcut instead of the intended cross-application reasoning problem.
+
+\textbf{$\tau^2$: the advertised constraints were slack.}\quad The final synthetic family asked the policy to reserve a two-item laboratory bundle under compatibility, arrival-time, and total-price constraints, then re-plan after an inventory race invalidated the first quote. The generator's own audit noted that arrival and price never became binding; distractors were distinguished mainly by capability or power. All 32 groups then scored 1.0, while all six earlier environment families were omitted from the round and public evaluation fell to 21.58\%. This does not prove that the new family caused the decline. It does show that a plausible task description can collapse to an easier latent decision and that perfect reward on that task does not establish coverage of the claimed mechanism.
+
+\textbf{Takeaway.}\quad Together, the cases explain the paper's limitations in operational terms. The researcher can miss the mechanism in a failure trace, receive reward that is uninformative or misdefined, validate a program that contains shortcuts or interaction defects, and then overwrite a useful checkpoint with a weaker one. Traceable behavioral evidence, explicit exposure and reward accounting, and independent implementation review are designed to make these failures visible; their individual causal effects still require matched ablations.
+
+\endgroup

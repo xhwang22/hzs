@@ -1,6 +1,6 @@
 \begin{table}[t]
 \centering
-\caption{Test performance (\%) at checkpoints selected on the public validation set. Green values show $\Delta$ from None (pp); Avg. averages all four benchmarks. Indented rows enable only the named component: BM, traceable behavioral map; CR, target-conditioned context refinement; EC, iterative environment construction. Dashes indicate unreported results.}
+\caption{Test performance (\%) at the reported checkpoints. Green/red deltas show gains/drops from None (pp); Avg. averages all four benchmarks. Dashes indicate unreported results.}
 \label{tab:mainresults}
 \begingroup
 \small
@@ -11,7 +11,8 @@
 \setlength{\belowrulesep}{1.5pt}
 \definecolor{modelband}{HTML}{E7F6FD}
 \definecolor{tablegain}{HTML}{218C4E}
-\newcommand{\tabledelta}[2]{\mbox{#1\,{\scriptsize\textcolor{tablegain}{\textbf{#2}}}}}
+\definecolor{tableloss}{HTML}{C43C39}
+\newcommand{\tabledelta}[2]{\mbox{#1\,{\scriptsize\ifdim#2pt<0pt\textcolor{tableloss}{\textbf{#2}}\else\ifdim#2pt>0pt\textcolor{tablegain}{\textbf{#2}}\else\textbf{#2}\fi\fi}}}
 \begin{tabular}{@{}m{.20\linewidth}@{}|@{}>{\centering\arraybackslash}m{.16\linewidth}@{}>{\centering\arraybackslash}m{.165\linewidth}@{}>{\centering\arraybackslash}m{.185\linewidth}@{}>{\centering\arraybackslash}m{.16\linewidth}@{}|@{}>{\centering\arraybackslash}m{\dimexpr.13\linewidth-2\arrayrulewidth\relax}@{}}
 \toprule
 \textbf{Method} & \textbf{$\tau^2$-Bench} & \textbf{BFCL-v4} &
@@ -20,26 +21,18 @@
 \multicolumn{6}{@{}c@{}}{\colorbox{modelband}{\makebox[\dimexpr\linewidth-2\fboxsep\relax][c]{\strut\textit{\normalsize Qwen3-4B-Instruct-2507}}}} \\
 \addlinespace[1pt]
 None & 31.89 & 25.42 & 41.11 & 8.93 & 26.84 \\
-\texttt{Codex-Vanilla} & \pending & \pending & \pending & \pending & \pending \\
-\texttt{Codex-E} & \pending & \pending & \pending & \pending & \pending \\
-\texttt{Fixed-Env} & \pending & \pending & \pending & \pending & \pending \\
+\texttt{Codex-Vanilla} & \tabledelta{21.58}{-10.31} & \tabledelta{25.75}{+0.33} & \pending & \tabledelta{13.69}{+4.76} & \pending \\
+\texttt{Fixed-Env} & \tabledelta{27.58}{-4.32} & \tabledelta{33.17}{+7.75} & \tabledelta{45.00}{+3.89} & \tabledelta{5.56}{-3.37} & \tabledelta{27.83}{+0.99} \\
 \midrule
-\method{} & \tabledelta{\textbf{39.33}}{+7.43} & \tabledelta{\textbf{42.08}}{+16.67} & \tabledelta{\textbf{52.22}}{+11.11} & \tabledelta{\textbf{22.22}}{+13.29} & \tabledelta{\textbf{38.96}}{+12.13} \\
-\hspace{1em}$\hookrightarrow$\; BM-only & \pending & \pending & \pending & \pending & \pending \\
-\hspace{1em}$\hookrightarrow$\; CR-only & \pending & \pending & \pending & \pending & \pending \\
-\hspace{1em}$\hookrightarrow$\; EC-only & \pending & \pending & \pending & \pending & \pending \\
+\method{} & \tabledelta{\textbf{50.60}}{+18.71} & \tabledelta{\textbf{42.08}}{+16.67} & \tabledelta{\textbf{52.22}}{+11.11} & \tabledelta{\textbf{22.22}}{+13.29} & \tabledelta{\textbf{41.78}}{+14.94} \\
 \addlinespace[3pt]
 \multicolumn{6}{@{}c@{}}{\colorbox{modelband}{\makebox[\dimexpr\linewidth-2\fboxsep\relax][c]{\strut\textit{\normalsize Qwen3-8B (reasoning enabled)}}}} \\
 \addlinespace[1pt]
-None & 28.54 & 44.42 & 43.89 & \pending & \pending \\
+None & 28.54 & 44.42 & 43.89 & 17.86 & 33.68 \\
 \texttt{Codex-Vanilla} & \pending & \pending & \pending & \pending & \pending \\
-\texttt{Codex-E} & \pending & \pending & \pending & \pending & \pending \\
 \texttt{Fixed-Env} & \pending & \pending & \pending & \pending & \pending \\
 \midrule
-\method{} & \pending & \pending & \pending & \pending & \pending \\
-\hspace{1em}$\hookrightarrow$\; BM-only & \pending & \pending & \pending & \pending & \pending \\
-\hspace{1em}$\hookrightarrow$\; CR-only & \pending & \pending & \pending & \pending & \pending \\
-\hspace{1em}$\hookrightarrow$\; EC-only & \pending & \pending & \pending & \pending & \pending \\
+\method{} & \tabledelta{\textbf{37.41}}{+8.87} & \pending & \pending & \tabledelta{\textbf{24.01}}{+6.15} & \pending \\
 \bottomrule
 \end{tabular}
 \endgroup

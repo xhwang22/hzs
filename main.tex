@@ -35,8 +35,6 @@
 LLM agents can serve as data researchers, automating the creation of training data for LLM post-training. We study data-centric recursive self-improvement for agent post-training. In this setting, a researcher agent starts from an empty environment library and constructs environments for online RL without access to the target backend or verifier; evaluation of the updated model then supplies feedback for the next round. Our experiments and audits identify three challenges: incomplete behavioral analysis, disconnected data--training--evaluation feedback, and incomplete implementation of intended environment mechanisms. We introduce \method{}, which uses source-traceable hierarchical analysis to \emph{see the patterns} in agent behavior and target-conditioned context refinement to \emph{close the loop} between data, training, and evaluation. These two designs guide environment construction and revision, supported by specification-driven implementation and independent review. Preliminary experiments with an earlier implementation yield observed test gains of 16.67 and 11.11 percentage points on BFCL and ACEBench, respectively, although gains vary across rounds. These findings suggest that evidence-guided environment evolution is a promising direction for automated agent post-training.
 \end{abstract}
 
-\input{figures/evolution_float}
-
 \input{sections/introduction}
 \input{sections/related_work}
 \input{sections/evidence_gaps}
@@ -52,5 +50,9 @@ The research loop is specified in Section~\ref{sec:evidencegaps}, construction i
 
 \bibliography{references}
 \bibliographystyle{iclr2027_conference}
+
+\clearpage
+\appendix
+\input{sections/codex_vanilla_case_studies}
 
 \end{document}

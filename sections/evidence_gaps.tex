@@ -52,6 +52,16 @@ by feedback and the evolving research context, the data researcher repeatedly
 creates new environments or revises existing ones, with the goal of improving
 the target model over successive training rounds.
 
+A generated environment is an executable program represented by
+\[
+e=(\mathcal S,\mathcal A,\mathcal T,\mathcal O),
+\]
+where $\mathcal S$ contains its data and state, $\mathcal A$ defines the
+available tools, $\mathcal T$ specifies their effects on state, and
+$\mathcal O$ determines the tool outputs and user responses visible to the
+model. The task $x$ fixes a goal and initial conditions, and the verifier
+$v$ checks the state and interaction trace to provide the training reward.
+
 \subsection{Incomplete Behavioral Analysis}
 \label{sec:coveragegap}
 
